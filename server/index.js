@@ -27,85 +27,76 @@ app.get("/allcars", (req, res) => {
 const users = [];
 
 //save data from signup page to users table in mysql
-app.post('/signup', (req, res) => {
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName
+app.post('/signup', async(req, res) => {
+    console.log('aaaa')
     let username = req.body.username
     let email = req.body.email
     let password = req.body.password
-
-    myDB.con.query(`Insert into users (firstName, lastName, username, email, password) VALUES ('${firstName}','${lastName}','${username}','${email}','${password}')`), (err, result) => {
-        if (err)
-            throw err;
+    let url = req.body.url
+    let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
+    myDB.con.query(emailExisted, async (err, results)=> {
+    if (results.length > 0 && results[0].email === email) {
+         return res.status(400).send("email already exist")
     }
-    console.log('asdfghjjk')
-})
-
-//Login
-//dealing with passwords (hashing and salting)
-app.post('/users', async (req, res) => {
-    console.log("Hello hashing", req.body.username)
-    try {
-        console.log("TRY hashing")
-        const salt = await bcrypt.genSalt();
-        const hashedPassword = await bcrypt.hash(req.body.password, 10); //10 is the salting number
-        const user = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            username: req.body.username,
-            email: req.body.email,
-            password: hashedPassword
-        };
-        users.push(user);
-        res.send(user);
-    } catch {
-        console.log("CATCH hashing")
-        res.status(500).send();
+    const salt = await bcrypt.genSalt(1);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    console.log(hashedPassword)
+    const user = {
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+        url: req.body.url
+    };
+    myDB.con.query(`Insert into users (username, email, password ) VALUES ('${user.username}','${user.email}','${user.password}' )`)
+    try{
+        res.send(user)
     }
-})
+    catch(err){
+        res.status(400).send(err)
+    }}
+  ) }
+   )
+   app.post('/login', async (req, res) => {
+    let email = req.body.email
+    let password = req.body.password
+    console.log(password)
+    let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
+    myDB.con.query(emailExisted, async (err, results)=> {
+        if (results.length > 0 && results[0].email === email) {
+            const validPassword =await bcrypt.compare(password, results[0].password)
+            console.log(results[0].password)
+            console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
+            if(!validPassword){
+                return res.status(400).send("Password is invalid")}
+            console.log(validPassword)
+// try{
+                const token = jwt.sign({_id: results[0].userID}, "" +  process.env.SECRET_TOKEN)
+             res.send(token)
+             console.log(token)
+         } else{
+    res.status(400).send("Password or Email is invalidddd")
+}
 
-//compare users from login page with db, if the user is verified, give him a token if not, detect if the user exist or if his username matches with his hashed password
-app.post('/login', async (req, res) => {
-
-    var username = req.body.username;
-    var password = req.body.password;
-    let query = `SELECT * FROM users WHERE username = '${req.body.username}'`
-    myDB.con.query(query, function(err, results) {
-        if (results.length > 0) {
-            bcrypt.compare(password, results[0].password, (err, response) => {
-                if (response) {
-                    const accessToken = jwt.sign({
-                        username: username
-                    }, process.env.ACCESS_TOKEN_SECRET);
-                    res.json({
-                        accessToken: accessToken
-                    });
-                } else {
-                    res.send("wrong username/password combination")
-                }
-            })
-        } else {
-console.log('haaaaaa')        }
     })
 })
 
 //verify the token before let the user enter a private route
-function authenticateToken(req, res, next) {
-    const token = req.query.token.accessToken;
-    if (!token)
-        res.status(400).send("we need a token");
-    else {
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (err) res.status(400).send("you failed to authenticate")
-            req.userId = user;
-            next()
-        })
-    }
-}
+// function authenticateToken(req, res, next) {
+//     const token = req.query.token.accessToken;
+//     if (!token)
+//         res.status(400).send("we need a token");
+//     else {
+//         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//             if (err) res.status(400).send("you failed to authenticate")
+//             req.userId = user;
+//             next()
+//         })
+//     }
+// }
 
-app.get('/posts', authenticateToken, (req, res) => {
-    res.status(200).send("you are Authenticated");
-})
+// app.get('/posts', authenticateToken, (req, res) => {
+//     res.status(200).send("you are Authenticated");
+// })
 
 //search a car by filtering code
 app.post('/inventory', (req, res) => {
@@ -163,7 +154,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '../my-app/src/index.js'));
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)
 });

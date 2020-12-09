@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import { storage } from './firebase/firebase'
+
+
+
 class AddCar extends React.Component {
   constructor() {
     super();
@@ -11,7 +15,8 @@ class AddCar extends React.Component {
       color:"",
       price :0,
       opreation:"",
-      image:""
+      image:null,
+      url:""
 
  }
 this.changeState=this.changeState.bind(this);
@@ -22,12 +27,45 @@ changeState(event){
   this.setState({ [event.target.name]: event.target.value });
 
 }
+handleChange(e){
+  if (e.target.files[0]) {
+this.setState({
+  image:e.target.files[0]
+})
+ }}
+
+
+handleUpload () {
+  var that=this;
+  const uploadTask = storage.ref(`cars/${this.state.image.name}`).put(this.state.image);
+  uploadTask.on(
+    "state_changed",
+    snapshot => {},
+
+    error => {
+      console.log(error);
+    },
+    () => {
+      storage
+        .ref("cars")
+        .child(this.state.image.name)
+        .getDownloadURL()
+        .then(url => {
+          this.setState({url:url});
+        });
+    }
+  );
+};
+
+
+
+
 signUp(){
   var that = this
-  console.log(this.state.username)
+  console.log(this.state.brand)
   $.ajax({
     method: 'POST',
-    url:'http://localhost:3000/signup',
+    url:'http://localhost:7000/addcar',
     data : JSON.stringify({
     description:this.state.description ,
     brand: this.state.brand,
@@ -35,11 +73,11 @@ signUp(){
     color: this.state.color,
     price: this.state.price,
     opreation: this.state.opreation,
-    image: this.state.image
+    url:this.state.url
     }),
     contentType: "application/json",
     success:function(){
-      console.log('success')
+      console.log(this.state.year)
     },
     error: function(err){
       console.log('error:' ,err)
@@ -48,7 +86,53 @@ signUp(){
 }
 render(){
   return (
-//     // <div className="card">
+    <div>
+    <select name ="brand"
+        onChange={this.changeState}  >
+                    <option name="" disabled>Choose option</option>
+                    <option  value="Brand"  selected>Brand</option>
+                    <option  value="BMW" >BMW</option>
+                    <option  value="Ford" >Ford</option>
+                    <option  value="Chevorlet" >Chevrolet</option>
+                    <option  value="Dodge" >Dodge</option>
+                                </select>
+
+    <select name ="year"
+        onChange={this.changeState}>
+                     <option  name="" disabled>Choose option</option>
+                     <option  value="" selected>Year</option>
+                     <option  value="2015" >2015</option>
+                     <option  value="2016" >2016</option>
+                     <option  value="2017" >2017</option>
+                     <option  value="2018" >2018</option>
+                     <option  value="2019" >2019</option>
+                     <option  value="2020" >2020</option>
+</select>
+
+                     <select name ="color"
+        onChange={this.changeState}>
+                       <option value="" disabled>Choose option</option>
+                       <option value="" selected>Color</option>
+                       <option value="Black" >Black</option>
+                       <option value="Grey" >Grey</option>
+                       <option value="White" >White</option>
+                       <option value="Blue" >Blue</option>
+                       <option value="Orange" >Orage</option>
+</select>
+
+    <select name ="opreation"
+        onChange={this.changeState}>
+                    <option name="" disabled>Choose option</option>
+                    <option name="" selected>Opreation</option>
+                    <option value="rent">For rent</option>
+                    <option value="sale">For sale</option>
+                </select>
+
+<input type='text' placeholder='type'></input>
+<input type="file" onChange={this.handleChange.bind(this)} />
+
+ <button  onClick ={this.signUp.bind(this) , this.handleUpload.bind(this)} type="submit">Post</button>
+</div>
 
 //     //     <h5 className="card-header info-color white-text text-center py-4">
 //     //         <strong>Add your car</strong>
@@ -112,7 +196,6 @@ render(){
 //         //     </form>
 //         // </div>
 
-//     // </div>
-<h1>gjhdfjh</h1>
+//     // </div> */}
 )}}
 export default AddCar;
