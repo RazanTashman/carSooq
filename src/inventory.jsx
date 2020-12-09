@@ -36,15 +36,14 @@ function clicked(id){
    return  (
 
     <div className="col-sm-6" key= {car._id}>
-      {/* <span  key= {car._id} onClick={()=>{clicked(car._id)}}> */}
+
   <div className="card"  onClick={()=>{clicked(car._id)}} >
   <img src={img}  alt="car" style={{width:"500px", height:"400px", margin:" 0 auto"}}/>
     <div className="card-body">
       <h5  className="card-title">Brand: {car.brand}</h5>
       <h6 className="card-text">Price: {car.price} $</h6>
       <p className="card-text">Description: {car.description}</p>
-      {/* <button key= {car._id} onClick={()=>{clicked(car._id)}}> profile</button> */}
-     {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
+
 
   </div>
   </div>
