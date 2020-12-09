@@ -2,32 +2,39 @@
 import React from 'react';
  import Header from './header';
  import Feedback from './feedback';
-//  import $ from 'jquery';
+ import $ from 'jquery';
+
 class Car extends React.Component {
   constructor() {
     super();
     this.state = {
-    car: []
+    car: [
+      { _id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj", "color":"pink","operation":"for rent", "image":"image here", "owner":"me"},
+       [{"sender":"areen","comment":"htghgh"},{"sender":"areeeeen","comment":"hii"}, {"sender":"areeeeen","comment":"hii"}]
+       ]
     }
-    // this.car = this.car.bind
   }
-  // getCar() {
-  //   var that = this;
-  //  $.ajax({
-  //   method: 'GET',
-  //   url:'http://localhost:7000/car/:id',
-  //   contentType: "application/json",
-  //   success: function(){
-  //     that.setState({
-  //       car: data
-  //     })
-  //     console.log(data);
-  //   },
-  //   error: function(err){
-  //     console.log('error:' ,err)
-  //   }
-  //  });
-  // }
+
+  componentDidMount() {
+    var that = this;
+    $.ajax({
+     method: 'GET',
+     url:'http://localhost:7000/car/:id',
+     contentType: "application/json",
+     success: function(){
+       that.setState({
+         car:  [{ "id":2 ,"brand":"BMW", "price": "15000", "description":"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj","color":"pink","operation":"for rent", "image":"image here", "owner":"me"}, [{"sender":"areen","comment":"htghgh"}, {"sender":"areeeeen","comment":"hii"}] ]
+       })
+      //  console.log(data);
+     },
+     error: function(err){
+       console.log('error:' ,err)
+     }
+    });
+
+  }
+
+
   // handleDelete() {
   //   var that = this;
   //  $.ajax({
@@ -64,42 +71,41 @@ class Car extends React.Component {
   //   }
   //  });
   // }
+
+
 render () {
-  return(
+  return (
       <div>
    <Header/>
-
-{this.state.car.map((element) => {
+   {this.state.car[0].map((element) => {
 return (
-  <div>
- <div class="card" style="width: 18rem;">
- <img class="card-img-top" src={element.image} alt="Card image cap"/>
- <div class="card-body">
-   <h5 class="card-title">{element.operation}</h5>
-   <p class="card-text">{element.description}</p>
+ <div className="card" style="width: 18rem;">
+ <img className="card-img-top" src={element.image} alt="Card image cap"/>
+ <div className="card-body">
+   <h5 className="card-title">{element.operation}</h5>
+   <p className="card-text">{element.description}</p>
  </div>
- <ul class="list-group list-group-flush">
-   <li class="list-group-item">{element.brand}</li>
-   <li class="list-group-item">{element.year}</li>
-   <li class="list-group-item">{element.color}</li>
-   <li class="list-group-item">{element.price}</li>
-   <li class="list-group-item">{element.owner}</li>
+ <ul className="list-group list-group-flush">
+   <li className="list-group-item">{element.brand}</li>
+   <li className="list-group-item">{element.year}</li>
+   <li className="list-group-item">{element.color}</li>
+   <li className="list-group-item">{element.price}</li>
+   <li className="list-group-item">{element.owner}</li>
    <Feedback/>
  </ul>
- <div class="card-body">
-   <a href="#" class="card-link">Card link</a>
-   <a href="#" class="card-link">Another link</a>
-   <button onClick={this.handleDelete.bind(this)}>Delete</button>
-   <button onClick={this.handleUpdate.bind(this)}>Update</button>
+ <div className="card-body">
+   <a href="#" className="card-link">Card link</a>
+   <a href="#" className="card-link">Another link</a>
+   {/* <button onClick={this.handleDelete.bind(this)}>Delete</button> */}
+   {/* <button onClick={this.handleUpdate.bind(this)}>Update</button> */}
  </div>
 </div>
-</div>
-)
-}
 )}
-</div>
 )
 }
+</div>
+  )}
+
 
 }
 export default Car;

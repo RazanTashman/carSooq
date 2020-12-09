@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-//
+
 // myDB.con.query(`Insert into users (username, email, password ) VALUES ('hi','wow','bye')`)
 
 //Get request to render all cars in stock db table when opening the inventory page.
@@ -40,7 +40,7 @@ app.post('/signup', (req, res) => {
         if (err)
             throw err;
     }
-    console.log('asdfghjjk')
+    res.send();
 })
 
 //Login
@@ -87,7 +87,8 @@ app.post('/login', async (req, res) => {
                 }
             })
         } else {
-console.log('haaaaaa')        }
+            res.send("User doesn't exist");
+        }
     })
 })
 
