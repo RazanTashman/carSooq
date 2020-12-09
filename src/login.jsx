@@ -15,6 +15,8 @@ class Login extends React.Component {
  getTheInfo(event){
      this.setState({ [event.target.name]: event.target.value });
     }
+    //
+
   login(){
     $.ajax({
       method: 'POST',
