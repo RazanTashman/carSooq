@@ -15,6 +15,8 @@ import Profile from './profile';
 import Wishlist from './wishlist';
 import Car from './car';
 import Filter from './filter'
+import AddCar from './addCar';
+
 
 function App()  {
 
@@ -39,6 +41,7 @@ function App()  {
          <Route path ='/wishlist' exact component ={Wishlist}></Route>
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
+         <Route path ='/profile'  component ={Filter}></Route>
 
 
 
