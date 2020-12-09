@@ -85,8 +85,7 @@ app.post('/login', async (req, res) => {
                 }
             })
         } else {
-            res.send("User doesn't exist");
-        }
+console.log('haaaaaa')        }
     })
 })
 

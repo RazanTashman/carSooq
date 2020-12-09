@@ -1,7 +1,8 @@
+import logo from './logo.svg';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import Nav from './nav'
-// import { Link } from 'react-router-dom';
+import { storage } from './firebase/firebase'
 
 class Signup extends React.Component {
   constructor() {
@@ -9,27 +10,63 @@ class Signup extends React.Component {
     this.state = {
       username:"",
       email:"",
-      password:""
-    }}
-getTheInfo(event){
-    this.setState({ [event.target.name]: event.target.value });
+      password:"",
+      image:null
+    }
 
+}
+//  handleChange(e){
+//   if (e.target.files[0]) {
+// this.setState({
+//   image:e.target.files[0]
+// })
+//  }}
+//  handleUpload(){
+//   const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
+//   uploadTask.on(
+//     "state_changed",
+//     snapshot => {
+//       // const progress = Math.round(
+//       //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//       // );
+//       console.log('amal')
+//     },
+//     error => {
+//       console.log(error);
+//     },
+//     () => {
+//       storage
+//         .ref("images")
+//         .child(this.state.image.name)
+//         .getDownloadURL()
+//         .then(url => {
+//           this.setUrl(url);
+//         });
+//     }
+//   );
+// };
+
+// }
+
+
+
+getTheInfo(event){
+    this.setState({ [event.target.name]: event.target.value })
   }
 
 signUp(){
-  // var that = this
-  console.log(this.state.username)
+  var that = this
   $.ajax({
     method: 'POST',
     url:'http://localhost:7000/signup',
     data : JSON.stringify({
-    username:this.state.username ,
-    email: this.state.email,
-    password:this.state.password
+    username:that.state.username ,
+    email: that.state.email,
+    password:that.state.password
     }),
     contentType: "application/json",
-    success:function(){
-      console.log('success')
+    success:function(data){
+      console.log(data)
     },
     error: function(err){
       console.log('error:' ,err)
@@ -38,42 +75,56 @@ signUp(){
 }
     render(){
       return (
-        <div>
-          <Nav />
-{/* <div class="container">
-  <div class="row">
-    <div class="col-lg-6 col-xl-6 mx-auto">
-      <div class="card card-signin flex-row my-5" style="background-color: rgba(255, 255,255, 0.2);">
-        <div class="card-img-left d-none d-md-flex" >
-        </div>
-        <div class="card-body">
-          <h5 class="card-title text-center">Register</h5>
-          <form class="form-signin">
-            <div class="form-label-group">
-              <label for="inputUserame"  style="font-weight: bold; color :rgba(0, 0,0, 1)" >Username</label>
-              <input type="text" class="form-control" placeholder="Username" name="username"  onChange={this.getTheInfo.bind(this)} required autofocus >
-            </div> <br>
-            <div class="form-label-group">
-              <label for="inputEmail" style="font-weight: bold; color :rgba(0, 0,0, 1)">Email address</label>
-              <input type="email" class="form-control" placeholder="Email address"  name='email' onChange={this.getTheInfo.bind(this)} required>
-            </div>
-             <br>
-            <div class="form-label-group">
-              <label for="inputPassword" style="font-weight: bold; color :rgba(0, 0,0, 1)">Password</label>
-              <input type="password"  class="form-control" placeholder="Password" name="password" onChange={this.getTheInfo.bind(this)} required>
-            </div>
-            <br>
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"  style="color:white;background-color: black;" onClick={this.signUp.bind(this)}>Sign up</button>
-         </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>*/}
-</div>
 
-  )
-   }
-  }
-export default Signup
+      <div>
+<input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)}/>
+<input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
+<input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
+<input type="file"  />
+
+<button onClick={this.signUp.bind(this)}>Signup</button>
+  </div>
+
+     /////////////////////////
+//      <div className="card">
+
+//          <h5 className="card-header info-color white-text text-center py-4">
+//              <strong>Sign up</strong>
+//          </h5>
+//          <div className="card-body px-lg-5 pt-0">
+//              <form className="text-center" style={color: '#757575'}} action="#!">
+
+//                  <div className="form-row">
+//                      <div className="col">
+//                          <div className="md-form">
+//                              <input type="text" id="materialRegisterFormFirstName" className="form-control" name='username' onChange={this.getTheInfo.bind(this)}/>
+//                              <label htmlFor="materialRegisterFormFirstName">Username</label>
+//                          </div>
+//                      </div>
+
+//                  <div className="md-form mt-0">
+//                      <input type="email" id="materialRegisterFormEmail" name='email' className="form-control" onChange={this.getTheInfo.bind(this)}/>
+//                      <label htmlFor="materialRegisterFormEmail">E-mail</label>
+//                  </div>
+
+//                  <div className="md-form">
+//                      <input type="password" id="materialRegisterFormPassword"  name='password' className="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock"  onChange={this.getTheInfo.bind(this)}/>
+//                      <label htmlFor="materialRegisterFormPassword">Password</label>
+//                      <small id="materialRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
+//                          At least 8 characters and 1 digit
+//                      </small>
+//                  </div>
+
+
+//                  <button className="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" onClick={this.signUp.bind(this)}>Sign in</button>
+//  </div>
+
+// </form>
+// </div>
+
+
+
+//      </div>
+
+     )}}
+export default Signup;
