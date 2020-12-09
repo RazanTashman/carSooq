@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+//
+// myDB.con.query(`Insert into users (username, email, password ) VALUES ('hi','wow','bye')`)
 
 //Get request to render all cars in stock db table when opening the inventory page.
 app.get("/allcars", (req, res) => {
