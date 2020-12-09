@@ -64,6 +64,14 @@
 var mysql = require('mysql');
 
 
+// Mysql globally
+// bd186e318fc66b
+
+// abc2e867
+
+// us-cdbr-east-02.cleardb.com
+
+
 //edit your user and password
 //our database called stock
 var con = mysql.createConnection({
@@ -73,9 +81,11 @@ var con = mysql.createConnection({
     database: "stock",
 });
 
-//connecting mysql and creating 2 tables in our stock; called cars & users
-con.connect(function(err) {
-    if (err) throw err;
+//connecting mysql and creating 5 tables in our stock; called cars ,users, emails, wishlist, feedbacks.
+con.connect();
+setInterval(function() {
+    con.query('SELECT 1');
+}, 5000);
     console.log("MySQL Connected!!!");
 //fields of users table - users TABLE
 var Users = "CREATE TABLE IF NOT EXISTS users ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username VARCHAR(20), email VARCHAR(30), password VARCHAR(255), image TEXT )";
@@ -107,7 +117,7 @@ con.query(Feedback, function(err, result) {
     if (err) throw err;
     console.log("feedback table created!");
 });
-});
+
 
 //save function to see our cars dummy data in the mysql terminal (insert data in the columns) so we can deal directly with the database
 // for (var i = 0; i < data.length; i++) {

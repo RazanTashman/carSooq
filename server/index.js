@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+//
+// myDB.con.query(`Insert into users (username, email, password ) VALUES ('hi','wow','bye')`)
 
 //Get request to render all cars in stock db table when opening the inventory page.
 app.get("/allcars", (req, res) => {
@@ -30,55 +32,6 @@ app.get("/allcars", (req, res) => {
 
 const users = [];
 
-app.post('/signup', async(req, res) => {
-    let username = req.body.username
-    let email = req.body.email
-    let password = req.body.password
-    console.log(req.body.url)
-    let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
-    myDB.con.query(emailExisted, async (err, results)=> {
-    if (results.length > 0 && results[0].email === email) {
-         return res.status(400).send("email already exist")
-    }
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    const user = {
-        username: req.body.username,
-        email: req.body.email,
-        password: hashedPassword,
-        url: req.body.url
-    };
-    myDB.con.query(`Insert into users (username, email, password , image) VALUES ('${user.username}','${user.email}','${user.password}','${user.url}' )`)
-    try{
-        res.send(user)
-    }
-    catch(err){
-        res.status(400).send(err)
-    }}
-  ) }
-   )
-
-//login
-app.post('/login', async (req, res) => {
-    let email = req.body.email
-    let password = req.body.password
-
-    let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
-    myDB.con.query(emailExisted, async (err, results)=> {
-        if (results.length > 0 && results[0].email === email) {
-
-    const validPassword = await bcrypt.compare(password, results[0].password);
-    if(!validPassword){
-    return res.status(400).send("Password or Email is invalid")}
-
-    const token = jwt.sign({_id: results[0]._id},  process.env.SECRET_TOKEN);
-
-  res.send(token)}
-  else{
-    return res.status(400).send("Password or Email is invalid")
-
-  }
-    })})
 //search a car by filtering code
 app.post('/inventory', (req, res) => {
     var array =[]
@@ -162,12 +115,6 @@ app.post('/inventory', (req, res) => {
 app.get("/car/:id", (req, res) => {
     var obj={}
     let id = parseInt(req.params.id);
-    // let query = `SELECT * FROM cars WHERE carId = '${id}' `;
-    // myDB.con.query(query, (err, results) => {
-    //   res.send(results);
-    // });
-
-
     let query = `SELECT * FROM cars WHERE carId = '${id}' `;
     myDB.con.query(query, (err, results) => {
         obj.carId= results[0].carId
@@ -186,32 +133,9 @@ app.get("/car/:id", (req, res) => {
     myDB.con.query(mySql, (err, results) => {
         console.log(results)
         obj.comments=results
-        // res.writeHead(200, { 'Content-Type': 'application/json'});
         res.send(obj);
    });
   });
-
-        // let query = `SELECT * FROM cars WHERE carId = '${id}' `;
-    // myDB.con.query(query, (err, results) => {
-    //     obj.carId= results[0].carId
-    //     obj.brand=results[0].brand
-    //     obj.year=results[0].year
-    //     obj.price=results[0].price
-    //     obj.colour=results[0].colour
-    //     obj.onSale=results[0].onSale
-    //     obj.state=results[0].state
-    //     obj.operation=results[0].operation
-    //     obj.owner=results[0].owner
-    //     res.send(obj)
-    // });
-
-
-//     let mySql = `SELECT * FROM feedback WHERE car = '${id}' `;
-//     myDB.con.query(mySql, (err, results) => {
-//         console.log(results)
-//         obj.comment=results
-//         res.send(obj);
-//    });
 
 
   /////// to add car
@@ -397,7 +321,6 @@ app.get("/car/:id", (req, res) => {
     var email ={
         carId: req.body.carId,
         sender: req.body.sender,
-        // receiver: req.body.receiver,
         msg: req.body.msg
         }
         myDB.con.query(`SELECT owner FROM cars WHERE carId= '${email.carId}'`, (err, results) => {
@@ -441,12 +364,6 @@ var transporter = nodemailer.createTransport({
       console.log('Email sent: ' + info.response);
     }
   });
-
-//   var mySql=`Insert into emails (sender, receiver,) VALUES ('${email.sender}','${`SELECT owner FROM cars WHERE carId= '${email.carId}'`}')`
-
-
-    // myDB.con.query(getEmail, (err, results) => {
-    //     res.send(results);
 
 })
 

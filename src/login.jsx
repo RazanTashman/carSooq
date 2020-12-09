@@ -15,17 +15,19 @@ class Login extends React.Component {
  getTheInfo(event){
      this.setState({ [event.target.name]: event.target.value });
     }
+    //
+
   login(){
     $.ajax({
       method: 'POST',
-      url:'http://localhost:7000/login',
+      url:'http://localhost:3000/login',
       data : JSON.stringify({
       email: this.state.email,
       password:this.state.password
       }),
       contentType: "application/json",
-      success:function(){
-        console.log('success')
+      success:function(data){
+        console.log(data)
       },
       error: function(err){
         console.log('error:' ,err)
