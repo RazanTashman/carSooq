@@ -77,32 +77,30 @@ render () {
   return (
       <div>
    <Header/>
-   {this.state.car[0].map((element) => {
-return (
+
  <div className="card" style="width: 18rem;">
- <img className="card-img-top" src={element.image} alt="Card image cap"/>
+ <img className="card-img-top" src={this.state.car[0].image} alt="Card image cap"/>
  <div className="card-body">
-   <h5 className="card-title">{element.operation}</h5>
-   <p className="card-text">{element.description}</p>
+   <h5 className="card-title">{this.state.car[0].operation}</h5>
+   <p className="card-text">{this.state.car[0].description}</p>
  </div>
  <ul className="list-group list-group-flush">
-   <li className="list-group-item">{element.brand}</li>
-   <li className="list-group-item">{element.year}</li>
-   <li className="list-group-item">{element.color}</li>
-   <li className="list-group-item">{element.price}</li>
-   <li className="list-group-item">{element.owner}</li>
+   <li className="list-group-item">{this.state.car[0].brand}</li>
+   <li className="list-group-item">{this.state.car[0].year}</li>
+   <li className="list-group-item">{this.state.car[0].color}</li>
+   <li className="list-group-item">{this.state.car[0].price}</li>
+   <li className="list-group-item">{this.state.car[0].owner}</li>
    <Feedback/>
  </ul>
  <div className="card-body">
-   <a href="#" className="card-link">Card link</a>
-   <a href="#" className="card-link">Another link</a>
+   {/* <a href="#" className="card-link">Card link</a>
+   <a href="#" className="card-link">Another link</a> */}
    {/* <button onClick={this.handleDelete.bind(this)}>Delete</button> */}
    {/* <button onClick={this.handleUpdate.bind(this)}>Update</button> */}
  </div>
 </div>
-)}
-)
-}
+
+
 </div>
   )}
 
