@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
@@ -15,7 +16,7 @@ import Profile from './profile';
 import Wishlist from './wishlist';
 import Car from './car';
 import Filter from './filter'
-
+import About from './about'
 function App()  {
 
   return (
@@ -39,6 +40,7 @@ function App()  {
          <Route path ='/wishlist' exact component ={Wishlist}></Route>
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
+         <Route path ='/aboutus'  component ={About}></Route>
 
 
 
