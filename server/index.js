@@ -38,7 +38,7 @@ app.post('/signup', (req, res) => {
         if (err)
             throw err;
     }
-    res.send();
+    console.log('asdfghjjk')
 })
 
 //Login

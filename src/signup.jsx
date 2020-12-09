@@ -58,7 +58,7 @@ signUp(){
   var that = this
   $.ajax({
     method: 'POST',
-    url:'http://localhost:7000/signup',
+    url:'http://localhost:3000/signup',
     data : JSON.stringify({
     username:that.state.username ,
     email: that.state.email,
