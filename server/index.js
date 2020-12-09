@@ -40,7 +40,7 @@ app.post('/signup', (req, res) => {
         if (err)
             throw err;
     }
-    res.send();
+    console.log('asdfghjjk')
 })
 
 //Login
@@ -87,8 +87,7 @@ app.post('/login', async (req, res) => {
                 }
             })
         } else {
-            res.send("User doesn't exist");
-        }
+console.log('haaaaaa')        }
     })
 })
 
