@@ -25,6 +25,7 @@
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.4.16",
     "popper.js": "^1.16.1-lts",
     "process-nextick-args": "^2.0.1",
     "react": "^17.0.1",
