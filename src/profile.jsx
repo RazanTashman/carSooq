@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from './header';
 import Wishlist from './wishlist';
+import Car from './car';
 import $ from 'jquery';
 
 class Profile extends React.Component {
@@ -12,10 +13,25 @@ class Profile extends React.Component {
     }
   }
 
+  clicked(id) {
+    console.log(id)
+    $.ajax({
+      url: `/car/${id}`,
+      type: "GET",
+      success: (data) => {
+      //  <Car data={this.state.car2}/>
+      // console.log("i got cars ");
+      },
+      error: (err) => {
+        console.log("Post Method Failed");
+      }
+    });
+   }
+
   componentDidMount() {
     var that = this;
    $.ajax({
-    method: 'GET',
+    type: 'GET',
     url:'http://localhost:7000/profile',
     contentType: "application/json",
     headers: { 'x-my-custom-header': 'some value' },
@@ -58,6 +74,7 @@ render() {
 
 return (
     <div className="col-sm-6">
+  <span onClick={()=>{this.clicked(element.id)}}>
   <div className="card">
   <img src={element.image}  alt="car"/>
     <div className="card-body">
@@ -66,6 +83,7 @@ return (
       <p className="card-text">Description: {element.description}</p>
   </div>
   </div>
+  </span>
   </div>
 )
     })
