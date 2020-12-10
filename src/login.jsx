@@ -67,7 +67,7 @@ class Login extends React.Component {
 var that =this
     $.ajax({
       method: 'POST',
-      url:'http://localhost:3000/login',
+      url:'http://localhost:7000/login',
       data : JSON.stringify({
       email: this.state.email,
       password:this.state.password
@@ -86,7 +86,6 @@ render(){
   return (
 
 <div class="signup-form">
-    <form  >
 		<div class="form-header">
 			<h2>Log in</h2>
       </div>
@@ -105,10 +104,10 @@ render(){
           </div>
         </div>
         <div class="form-group">
-			<button type="submit" className="btn btn-primary btn-block btn-lg" onClick={this.login.bind(this)}>Log in</button>
+			<button type="submit" className="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Log in</button>
 		</div>
 
-        </form></div>
+       </div>
 
   /* //   <div>
   //     <Nav />
@@ -125,7 +124,6 @@ render(){
   // </div>
 
 
-<<<<<<< HEAD
 =======
 
 
