@@ -22,6 +22,9 @@ function Header() {
                      <Link to="/" className="nav-link"  onClick={()=>{localStorage.removeItem('token')}}>Sign Out</Link>
                 </li>
                 </ul>
+                <Link className="dropdown-item"to="/"
+          ><button onClick ={()=>{
+            localStorage.removeItem("token") }}>Sign Out</button> </Link>
             </div>
                 </nav>
                 </div>

@@ -18,6 +18,8 @@ import Car from './car';
 import Filter from './filter'
 import About from './about'
 import AddCar from './addCar';
+import Car2 from './car2'
+import Form from './form'
 
 
 function App()  {
@@ -44,7 +46,11 @@ function App()  {
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
          <Route path ='/aboutus'  component ={About}></Route>
-         <Route path ='/wishlist'  component ={Wishlist}></Route>
+
+         <Route path ='/car2'  component ={Car2}></Route>
+         <Route path ='/form'  component ={Form}></Route>
+         {/* <Route path ='/profile'  component ={AddCar}></Route> */}
+
 
 
 

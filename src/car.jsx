@@ -3,8 +3,10 @@ import React from 'react';
  import Header from './header';
  import Feedback from './feedback';
  import $ from 'jquery';
-//  import Form from './form';
+ import Form from './form';
  import { Link } from 'react-router-dom';
+
+
 class Car extends React.Component {
   constructor() {
     super();
@@ -15,12 +17,15 @@ class Car extends React.Component {
        ]
     }
   }
+
+
+
 //send carID and token to know the user
   handleWishlist() {
     var that = this.state.car[0];
    $.ajax({
     type: 'POST',
-    url:'http://localhost:7000/wishlist',
+    url:'http://localhost:3000/wishlist',
     contentType: "application/json",
     data : JSON.stringify({ id: that.id}),
     headers: { 'x-my-custom-header': 'some value' },
@@ -39,6 +44,17 @@ class Car extends React.Component {
 <link to="/form" className="nav-link" style={{marginLeft:"300px"}}></link>
 </div> )
   }
+
+//   handleContact() {
+//     console.log("clicked")
+//     return(
+// <div>
+// <link to="/form" className="nav-link" style={{marginLeft:"300px"}}></link>
+// </div> )
+//   }
+
+
+
 render () {
   return (
       <div>
@@ -55,10 +71,20 @@ render () {
    <li className="list-group-item">{this.state.car[0].color}</li>
    <li className="list-group-item">{this.state.car[0].price}</li>
    <li className="list-group-item">{this.state.car[0].owner}</li>
+
  </ul>
  <div className="card-body">
    <button onClick={()=>this.handleWishlist()}>Add to wishlist</button>
-  <button onClick={()=>this.handleContact()}>Contact owner</button>
+   <button><Link to={{
+ pathname: "/form",
+//  state={ this.state.car}
+}}>Contact Owner</Link></button>
+   {/* <button onClick={()=>this.handleContact()}>
+   <link to="/form" className="nav-link" style={{marginLeft:"300px"}}>  Contact owner   </link>
+   </button> */}
+
+
+
  </div>
 </div>
 </div>
