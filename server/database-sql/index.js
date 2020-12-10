@@ -77,6 +77,25 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
+    password: "",
+    database: "carsooq",
+});
+
+// connecting mysql and creating 2 tables in our stock; called cars & users
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("MySQL Connected!!!");
+    var Cars = "CREATE TABLE IF NOT EXISTS cars (brand VARCHAR(20), year YEAR, price INT, colour VARCHAR(20), description VARCHAR(250), image TEXT, id INT PRIMARY KEY )";
+    con.query(Cars, function(err, result) {
+        if (err) throw err;
+        console.log("Cars Table created!!!");
+    });
+    var Users = "CREATE TABLE IF NOT EXISTS users (id int NOT NULL AUTO_INCREMENT, username VARCHAR(20), email VARCHAR(30), password VARCHAR(255), PRIMARY KEY (id))";
+    con.query(Users, function(err, result) {
+        if (err) throw err;
+        console.log("Users Table created!!!");
+    });
+=======
     password: "123",
     database: "stock",
 });
@@ -104,6 +123,7 @@ var Emails = "CREATE TABLE IF NOT EXISTS emails ( id INT NOT NULL PRIMARY KEY AU
 con.query(Emails, function(err, result) {
     if (err) throw err;
     console.log("emails table created!");
+>>>>>>> 3d8949901c0da599a61119f6ed76640c4a23f754
 });
 //fields of wishlist table - wishlist TABLE
 var Wishlist = "CREATE TABLE IF NOT EXISTS wishlist ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,  user INT NOT NULL REFERENCES users(id),  car INT NOT NULL REFERENCES cars(id)  )";

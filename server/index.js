@@ -32,6 +32,79 @@ app.get("/allcars", (req, res) => {
 
 const users = [];
 
+<<<<<<< HEAD
+//save data from signup page to users table in mysql
+app.post('/signup', async(req, res) => {
+    console.log('aaaa')
+    let username = req.body.username
+    let email = req.body.email
+    let password = req.body.password
+    let url = req.body.url
+    let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
+    myDB.con.query(emailExisted, async (err, results)=> {
+    if (results.length > 0 && results[0].email === email) {
+         return res.status(400).send("email already exist")
+    }
+    const salt = await bcrypt.genSalt(1);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    console.log(hashedPassword)
+    const user = {
+        username: req.body.username,
+        email: req.body.email,
+        password: hashedPassword,
+        url: req.body.url
+    };
+    myDB.con.query(`Insert into users (username, email, password ) VALUES ('${user.username}','${user.email}','${user.password}' )`)
+    try{
+        res.send(user)
+    }
+    catch(err){
+        res.status(400).send(err)
+    }}
+  ) }
+   )
+   app.post('/login', async (req, res) => {
+    let email = req.body.email
+    let password = req.body.password
+    console.log(password)
+    let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
+    myDB.con.query(emailExisted, async (err, results)=> {
+        if (results.length > 0 && results[0].email === email) {
+            const validPassword =await bcrypt.compare(password, results[0].password)
+            console.log(results[0].password)
+            console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
+            if(!validPassword){
+                return res.status(400).send("Password is invalid")}
+            console.log(validPassword)
+// try{
+                const token = jwt.sign({_id: results[0].userID}, "" +  process.env.SECRET_TOKEN)
+             res.send(token)
+             console.log(token)
+         } else{
+    res.status(400).send("Password or Email is invalidddd")
+}
+
+    })
+})
+
+//verify the token before let the user enter a private route
+// function authenticateToken(req, res, next) {
+//     const token = req.query.token.accessToken;
+//     if (!token)
+//         res.status(400).send("we need a token");
+//     else {
+//         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//             if (err) res.status(400).send("you failed to authenticate")
+//             req.userId = user;
+//             next()
+//         })
+//     }
+// }
+
+// app.get('/posts', authenticateToken, (req, res) => {
+//     res.status(200).send("you are Authenticated");
+// })
+=======
 //search a car by filtering code
 app.post('/inventory', (req, res) => {
     var array =[]
@@ -356,6 +429,7 @@ var transporter = nodemailer.createTransport({
     subject: 'Car ',
     text: email.msg
   };
+>>>>>>> 3d8949901c0da599a61119f6ed76640c4a23f754
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
@@ -368,7 +442,12 @@ var transporter = nodemailer.createTransport({
 })
 
 });
+<<<<<<< HEAD
+
+const port = process.env.PORT || 9000;
+=======
 const port = process.env.PORT || 8000;
+>>>>>>> 3d8949901c0da599a61119f6ed76640c4a23f754
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)
 });
