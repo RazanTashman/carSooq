@@ -10,6 +10,6 @@ const firebaseConfig = {
   measurementId: "G-D8TQWLG8CL"
 };
 
-firebase.initializeApp({ firebaseConfig });
+firebase.initializeApp( firebaseConfig );
 const storage = firebase.storage()
 export { storage , firebase as default}
