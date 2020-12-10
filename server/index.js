@@ -15,12 +15,19 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(__dirname + "/../react-client/dist"));
 app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+
 app.use(
     bodyParser.urlencoded({
         extended: false,
     })
 );
-//
+
+
 // myDB.con.query(`Insert into users (username, email, password ) VALUES ('hi','wow','bye')`)
 
 //Get request to render all cars in stock db table when opening the inventory page.
@@ -46,6 +53,31 @@ app.post('/signup', async(req, res) => {
     if (results.length > 0 && results[0].email === email) {
          return res.status(400).send("email already exist")
     }
+
+    res.send();
+})
+
+//Login
+//dealing with passwords (hashing and salting)
+app.post('/users', async (req, res) => {
+    console.log("Hello hashing", req.body.username)
+    try {
+        console.log("TRY hashing")
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); //10 is the salting number
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            username: req.body.username,
+            email: req.body.email,
+            password: hashedPassword
+        };
+        users.push(user);
+        res.send(user);
+    } catch {
+        console.log("CATCH hashing")
+        res.status(500).send();
+
     const salt = await bcrypt.genSalt(1);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     console.log(hashedPassword)
@@ -58,12 +90,13 @@ app.post('/signup', async(req, res) => {
     myDB.con.query(`Insert into users (username, email, password ) VALUES ('${user.username}','${user.email}','${user.password}' )`)
     try{
         res.send(user)
+
     }
     catch(err){
         res.status(400).send(err)
     }}
-  ) }
-   )
+} )
+
    app.post('/login', async (req, res) => {
     let email = req.body.email
     let password = req.body.password
@@ -84,6 +117,31 @@ app.post('/signup', async(req, res) => {
          } else{
     res.status(400).send("Password or Email is invalidddd")
 }
+
+
+//compare users from login page with db, if the user is verified, give him a token if not, detect if the user exist or if his username matches with his hashed password
+app.post('/login', async (req, res) => {
+
+    var username = req.body.username;
+    var password = req.body.password;
+    let query = `SELECT * FROM users WHERE username = '${req.body.username}'`
+    myDB.con.query(query, function(err, results) {
+        if (results.length > 0) {
+            bcrypt.compare(password, results[0].password, (err, response) => {
+                if (response) {
+                    const accessToken = jwt.sign({
+                        username: username
+                    }, process.env.ACCESS_TOKEN_SECRET);
+                    res.json({
+                        accessToken: accessToken
+                    });
+                } else {
+                    res.send("wrong username/password combination")
+                }
+            })
+        } else {
+            res.send("User doesn't exist");
+        }
 
     })
 })
