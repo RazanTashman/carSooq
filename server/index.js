@@ -186,9 +186,9 @@ app.post("/inventory", (req, res) => {
 app.get("/car/:id", (req, res) => {
     var obj = {};
     let id = parseInt(req.params.id);
-    let query = `SELECT * FROM cars WHERE carId = '${id}' `;
+    let query = `SELECT * FROM cars WHERE id = '${id}' `;
     myDB.con.query(query, (err, results) => {
-        obj.carId = results[0].carId;
+        obj.carId = results[0].id;
         obj.brand = results[0].brand;
         obj.year = results[0].year;
         obj.price = results[0].price;
@@ -249,8 +249,8 @@ app.post("/add", (req, res) => {
 /////// to display user profile
 app.post("/profile", (req, res) => {
     obj = {};
-    let userId = req.body.id;
-    let query = `SELECT * FROM users WHERE users.id = '${userId}' `;
+    let userId = req.body.userId;
+    let query = `SELECT * FROM users WHERE users.userId = '${userId}' `;
     myDB.con.query(query, (err, results) => {
         obj.username = results[0].username;
         obj.email = results[0].email;
@@ -283,7 +283,7 @@ app.get("/home/sale", (req, res) => {
 
 //// to display the cars for rent for each seller
 app.post("/profile/rent", (req, res) => {
-    let userId = req.body.id;
+    let userId = req.body.userId;
     let query = `SELECT * FROM cars WHERE operation = 'rent' AND owner = '${userId}' `;
     myDB.con.query(query, (err, results) => {
         res.send(results);
@@ -292,7 +292,7 @@ app.post("/profile/rent", (req, res) => {
 
 //// to display the cars for rent for each seller
 app.post("/profile/sale", (req, res) => {
-    let userId = req.body.id;
+    let userId = req.body.userId;
     let query = `SELECT * FROM cars WHERE operation = 'sale' AND owner = '${userId}' `;
     myDB.con.query(query, (err, results) => {
         res.send(results);
@@ -301,8 +301,8 @@ app.post("/profile/sale", (req, res) => {
 
 //// to add for the wishlist
 app.post("/wishlist", (req, res) => {
-    let userId = req.body.id;
-    let carId = req.body.carId;
+    let userId = req.body.user;
+    let carId = req.body.car;
 
     let query = `REPLACE into wishlist (car, user) VALUES ('${carId}','${userId}')`;
     myDB.con.query(query, (err, results) => {
@@ -313,7 +313,7 @@ app.post("/wishlist", (req, res) => {
 //// to get for the wishlist
 app.get("/wishlist/:id", (req, res) => {
     let wishlistId = parseInt(req.params.id);
-    let mySql = `SELECT * FROM cars WHERE carId IN (SELECT car FROM wishlist WHERE user IN (SELECT user FROM wishlist WHERE id = '${wishlistId}'))`;
+    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user IN (SELECT user FROM wishlist WHERE id = '${wishlistId}'))`;
     myDB.con.query(mySql, (err, results) => {
         res.send(results);
     });
@@ -357,7 +357,7 @@ app.put("/update", (req, res) => {
 app.delete("/delete/:id", (req, res) => {
     let carId = parseInt(req.params.id);
     console.log(carId);
-    let query = `DELETE FROM cars WHERE carId = '${carId}'`;
+    let query = `DELETE FROM cars WHERE id = '${carId}'`;
     myDB.con.query(query, (err, results) => {
         res.send("Deleted");
     });
@@ -386,12 +386,13 @@ app.get("/feedback/:id", (req, res) => {
 
 app.post("/email", (req, res) => {
     var email = {
-        carId: req.body.carId,
+        carId: req.body.car,
         sender: req.body.sender,
-        msg: req.body.msg,
+        msg: req.body.comment,
+        email: req.body.email
     };
     myDB.con.query(
-        `SELECT owner FROM cars WHERE carId= '${email.carId}'`,
+        `SELECT owner FROM cars WHERE id= '${email.carId}'`,
         (err, results) => {
             console.log(results);
 
@@ -406,7 +407,7 @@ app.post("/email", (req, res) => {
         }
     );
 
-    let getEmail = `SELECT email FROM users WHERE id IN ( SELECT owner FROM cars WHERE carId= '${email.carId}') `;
+    let getEmail = `SELECT email FROM users WHERE userId IN ( SELECT owner FROM cars WHERE id= '${email.carId}') `;
     myDB.con.query(getEmail, (err, results) => {
         res.send(results);
 
@@ -424,6 +425,7 @@ app.post("/email", (req, res) => {
             from: "tashmanrazan@gmail.com",
             to: results[0].email,
             subject: "Car ",
+            cc: email.email,
             text: email.msg,
         };
 
