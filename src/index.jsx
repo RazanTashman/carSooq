@@ -42,7 +42,7 @@ function App()  {
          <Route path ='/wishlist' exact component ={Wishlist}></Route>
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
-         <Route path ='/footer'  component ={AddCar}></Route>
+         <Route path ='/filter'  component ={AddCar}></Route>
          <Route path ='/aboutus'  component ={About}></Route>
 
          <Route path ='/car2'  component ={Car2}></Route>
