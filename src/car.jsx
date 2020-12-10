@@ -5,11 +5,11 @@ import React from 'react';
  import $ from 'jquery';
  import Form from './form';
  import { Link } from 'react-router-dom';
-
+ import  { Redirect } from 'react-router-dom'
 
 class Car extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
     car: [
       { id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj", "color":"pink","operation":"for rent", "image":"image here", "owner":"me","year":2020},
@@ -19,13 +19,24 @@ class Car extends React.Component {
   }
 
 
-
+  // componentDidMount() {
+  //   var that = this;
+  //    $.ajax({
+  //   url: `/car/${this.props.location.state}`,
+  //   method: "GET",
+  //   success: (data) => {
+  //    that.setState({car:data[0]})
+  //   },
+  //   error: (err) => {
+  //     console.log("Post Method Failed");
+  //   },
+  // }); }
 //send carID and token to know the user
   handleWishlist() {
     var that = this.state.car[0];
    $.ajax({
     type: 'POST',
-    url:'http://localhost:3001/wishlist',
+    url:'http://localhost:3000/wishlist',
     contentType: "application/json",
     data : JSON.stringify({ id: that.id}),
     headers: { 'x-my-custom-header': 'some value' },
@@ -37,6 +48,14 @@ class Car extends React.Component {
     }
    });
   }
+  ProtectedComponent() {
+    if (!localStorage.getItem('token')){
+      localStorage.setItem('id', this.props.location.state)
+      return <Redirect to='/login'/>
+  }
+
+  }
+
 
 //   handleContact() {
 //     console.log("clicked")
@@ -52,8 +71,7 @@ render () {
   return (
       <div>
    <Header/>
-
- <div className="card" style={{width: "60rem"}}>
+ <div className="card" style={{width: "60rem", margin:"0 auto"}}>
  <img className="card-img-top" src={this.state.car[0].image} alt="Card image cap"/>
  <div className="card-body">
    <h5 className="card-title">{this.state.car[0].operation}</h5>
@@ -69,14 +87,10 @@ render () {
  </ul>
  <div className="card-body">
    <button onClick={()=>this.handleWishlist()}>Add to wishlist</button>
-   <button><Link to={{
- pathname: "/form",
- state={ this.state.car}
-}}>Contact Owner</Link></button>
-   {/* <button onClick={()=>this.handleContact()}>
-   <link to="/form" className="nav-link" style={{marginLeft:"300px"}}>  Contact owner   </link>
-   </button> */}
+   <button><Link to={{pathname:"/form", state: this.state.car[0].id }}>Contact Owner</Link></button>
 
+<br/>
+<Feedback id={this.state.car[0].id} />
 
 
  </div>
@@ -84,7 +98,5 @@ render () {
 </div>
   )
 }
-
-
 }
 export default Car;

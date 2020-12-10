@@ -2,13 +2,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AddCar from './addCar';
-
+import { Carlist } from './inventory'
 
 
 import Header from './header';
 import Wishlist from './wishlist';
 import Car from './car';
 import $ from 'jquery';
+import image from './drive.jpg'
 
 class Profile extends React.Component {
   constructor() {
@@ -57,52 +58,19 @@ class Profile extends React.Component {
 
 
 render() {
-  return (
+  return(
     <div>
     <Header/>
-
-
-
-
      <div>
-     <img src={this.state.user[0].image}/>
+       <br/>
+     <img src={image} width="90px" height="90px"/>
      <h5>{this.state.user[0].username}</h5>
       <h5>{this.state.user[0].email}</h5>
      </div>
-
-
- <button>wishlist</button>
-
-
-
-
-    <div className="row">
-    {this.state.user[1].map((element) => {
-
-
-return (
-    <div className="col-sm-6">
-  <span onClick={()=>{this.clicked(element.id)}}>
-  <div className="card">
-  <img src={element.image}  alt="car"/>
-    <div className="card-body">
-      <h5  className="card-title">Brand: {element.brand}</h5>
-      <h6 className="card-text">Price: {element.price}</h6>
-      <p className="card-text">Description: {element.description}</p>
-  </div>
-  </div>
-  </span>
-  </div>
-)
-    })
-  }
-  </div>
-
+ <button style={{margin:"-50px 0px 0px 1400px"}} ><Link to="/wishlist">Wishlist</Link></button>
+ <Carlist cars ={this.state.user[1]} url="/car2"  />
 </div>
   )
 }
-
 }
 export default Profile;
-
-
