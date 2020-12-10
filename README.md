@@ -13,7 +13,7 @@ For buyers it dicreases the time, effort and money looking for the car that fits
 On the other hand for sellers their cars won't need a big place to show their cars and sell them in real life, all they need is signing up creating an account to display all their cars without even bothering about attracting their audience because the website will already have million of viewers.
 In one sentence it simplifies car trading by connecting sellers & buyers in one simple platform.
 # Logo:
-<img src= "images/CarSooqLogo.png" width = "100">
+<img src= "src/logo.webp" width = "100">
 ![](images/CarSooqLogo.png)
 Tech/framework used:
   Technologies built with:
