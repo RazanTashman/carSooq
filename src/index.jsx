@@ -17,6 +17,9 @@ import Wishlist from './wishlist';
 import Car from './car';
 import Filter from './filter'
 import About from './about'
+import AddCar from './addCar';
+
+
 function App()  {
 
   return (
@@ -41,6 +44,7 @@ function App()  {
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
          <Route path ='/aboutus'  component ={About}></Route>
+         <Route path ='/wishlist'  component ={Wishlist}></Route>
 
 
 

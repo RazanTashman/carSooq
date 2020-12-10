@@ -2,6 +2,9 @@
 import React from 'react'
 import './about.css';
 import Header from './header'
+import shell from './shell.jpg'
+import tot from './totall.jpg'
+import fr from './ferrari.jpg'
 function About() {
   return (
     <div >
@@ -20,45 +23,40 @@ function About() {
                   well.</p><br/>
                   <h5 style={{color: 'gray', fontWeight:'bold'}}>SIGN UP TO BE PART OF OUR FAMILY.</h5>
       <i style={{marginLeft: '5px', marginRight: '20px',fontSize:"30px"}} class="fab fa-facebook"></i><i style={{marginLeft: '5px', marginRight: "20px" ,fontSize:"30px"}} class="fab fa-whatsapp"></i><i style={{marginLeft: '5px', marginRight: "20px" ,fontSize:"30px"}}  class="fab fa-twitter"></i><i style={{marginLeft: '5px', marginRight: "20px" ,fontSize:"30px"}}  class="fab fa-instagram"></i>
-</div>
+</div><br/>
 
-<h2 style={{textAlign:"center"}}>Our Team</h2>
+<h2 style={{textAlign:"center"}}>Our Sponsors</h2>
 <div className="row">
   <div className="column">
     <div className="card">
-      <img src="/w3images/team1.jpg" alt="Jane" style={{width:"100%"}}/>
+      <img src={shell} alt="Jane" style={{width:"100%"}}/>
       <div className="container">
-        <h2>Jane Doe</h2>
-        <p className="title">CEO & Founder</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>jane@example.com</p>
-        <p><button className="button">Contact</button></p>
+        <h2>Shell</h2>
+        <p className="title"></p>
+        <p>a broad energy company, which produces and markets fuels, natural gas and electricity. </p>
+
+
       </div>
     </div>
   </div>
 
   <div className="column">
     <div className="card">
-      <img src="/w3images/team2.jpg" alt="Mike" style={{width:"100%"}}/>
+      <img src={fr} alt="Mike" style={{width:"100%"}}/>
       <div className="container">
-        <h2>Mike Ross</h2>
-        <p className="title">Art Director</p>
-        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>mike@example.com</p>
-        <p><button className="button">Contact</button></p>
+        <h2>Ferrari</h2>
+        <p> The luxury sports car manufacturer based in Maranello, Italy. Founded by Enzo Ferrari in 1939. </p>
       </div>
     </div>
   </div>
 
   <div className="column">
     <div className="card">
-      <img src="/w3images/team3.jpg" alt="John" style={{width:"100%"}}/>
+      <img src={tot} alt="John" style={{width:"100%"}}/>
       <div className="container">
-        <h2>John Doe</h2>
-        <p className="title">Designer</p>
+        <h2>Total</h2>
         <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-        <p>john@example.com</p>
-        <p><button className="button">Contact</button></p>
+
       </div>
     </div>
   </div>
