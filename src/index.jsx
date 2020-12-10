@@ -16,6 +16,8 @@ import Wishlist from './wishlist';
 import Car from './car';
 import Filter from './filter'
 import AddCar from './addCar';
+import Car2 from './car2'
+import Form from './form'
 
 
 function App()  {
@@ -26,10 +28,7 @@ function App()  {
 // <h1>welcooooome</h1></div>
     <Router>
 
-       {/* <Route path='/' exact component={LoginForm}></Route> */}
 
-{/*
-      <Home/> */}
 
         <div >
 
@@ -42,6 +41,10 @@ function App()  {
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
          <Route path ='/footer'  component ={AddCar}></Route>
+         <Route path ='/car2'  component ={Car2}></Route>
+         <Route path ='/form'  component ={Form}></Route>
+         <Route path ='/profile'  component ={AddCar}></Route>
+
 
 
 
