@@ -128,8 +128,40 @@ signUp(){
 }
     render(){
       return (
-<h1>gg</h1>
-//       <div>
+<div class="signup-form">
+    <form action="/login">
+		<div class="form-header">
+			<h2>Sign Up</h2>
+      </div>
+        <div class="form-group">
+			<label>Username</label>
+      <div>
+      <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)} type="text" className="form-control" required="required"/></div><div style={{ fontSize: 12, color: "red" }}>
+            {this.state.usernameError}
+          </div></div>
+          <div class="form-group">
+			<label>Email Address</label>
+      <input name='email' type= 'email' className="form-control" placeholder="email" onChange={this.getTheInfo.bind(this)} />
+      <div style={{ fontSize: 12, color: "red" }}>
+             {this.state.emailError}
+          </div>
+        </div>
+
+        <div class="form-group">
+			<label>Password</label>
+            <input type="password" class="form-control" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
+ <div style={{ fontSize: 12, color: "red" }}>
+             {this.state.passwordError}
+           </div>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Sign Up</button>
+		</div>
+        </form>
+</div>
+
+
+        /* //       <div>
 // <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)}/>
 // <div style={{ fontSize: 12, color: "red" }}>
 //             {this.state.usernameError}
@@ -154,7 +186,7 @@ signUp(){
 //        <h2>Sign up</h2>
 //        <div className="form-group">
 //          <label htmlFor="email">Username</label>
-//    <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)} className="form-control"/></div>
+//    <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)} type="text" className="form-control" required="required"/></div>
 //        <div className="form-group">
 //          <label htmlFor="email">Email address</label>
 //     <input name='username' placeholder="username"  id="txtUsername" className="form-control"   onChange={this.getTheInfo.bind(this)} required/>
@@ -163,7 +195,7 @@ signUp(){
 //     </div> </div></form>
 
 
-
+ */
 
 
      )}}
