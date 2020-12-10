@@ -67,7 +67,7 @@ class Login extends React.Component {
 var that =this
     $.ajax({
       method: 'POST',
-      url:'http://localhost:9000/login',
+      url:'http://localhost:7000/login',
       data : JSON.stringify({
       email: this.state.email,
       password:this.state.password
@@ -75,10 +75,9 @@ var that =this
       contentType: "application/json",
       success:function(data){
         console.log(data)
-        localStorage.setItem ("token" ,{ token :data})},
+        localStorage.setItem ("token" ,data)},
       error: function(err){
         that.setState({emailError : err.responseText})
-        window.location.reload();
       }
     })
   }
@@ -86,33 +85,58 @@ var that =this
 render(){
   return (
 
-
-
-    <div>
-      <Nav />
-
-    <input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
+<div class="signup-form">
+		<div class="form-header">
+			<h2>Log in</h2>
+      </div>
+        <div class="form-group">
+			<label>Email Address</label>
+        	<input type="email" class="form-control" name="email" required="required" onChange={this.getTheInfo.bind(this)}/>
     <div style={{ fontSize: 12, color: "red" }}>
             {this.state.emailError}
           </div>
-    <input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
+        </div>
+ <div class="form-group">
+<label>Password</label>
+            <input type="password" class="form-control" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
     <div style={{ fontSize: 12, color: "red" }}>
             {this.state.passwordError}
           </div>
-    <button onClick={this.validate.bind(this)}>login</button>
-  </div>
+        </div>
+        <div class="form-group">
+			<button type="submit" className="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Log in</button>
+		</div>
+
+       </div>
+
+  /* //   <div>
+  //     <Nav />
+
+  //   <input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
+  //   <div style={{ fontSize: 12, color: "red" }}>
+  //           {this.state.emailError}
+  //         </div>
+  //   <input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
+  //   <div style={{ fontSize: 12, color: "red" }}>
+  //           {this.state.passwordError}
+  //         </div>
+  //   <button onClick={this.validate.bind(this)}>login</button>
+  // </div>
 
 
-
-
-
+=======
 
 
 
 
 
 //////////////////////////////////////////////////
+>>>>>>> 245ead9772bb6c5f14443ae2fbfd28110a2b58c1
 
+
+
+//////////////////////////////////////////////////
+ */
 
   )
 }

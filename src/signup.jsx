@@ -27,7 +27,6 @@ class Signup extends React.Component {
   constructor() {
     super();
     this.state =initialState;
-
 }
  handleChange(e){
   if (e.target.files[0]) {
@@ -65,10 +64,6 @@ this.setState({
 this.signUp()}
 
 };
-
-
-
-
 
 handleUpload () {
   var that=this;
@@ -133,66 +128,75 @@ signUp(){
 }
     render(){
       return (
-
+<div class="signup-form">
+    <form action="/login">
+		<div class="form-header">
+			<h2>Sign Up</h2>
+      </div>
+        <div class="form-group">
+			<label>Username</label>
       <div>
-<input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)}/>
-<div style={{ fontSize: 12, color: "red" }}>
+      <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)} type="text" className="form-control" required="required"/></div><div style={{ fontSize: 12, color: "red" }}>
             {this.state.usernameError}
+          </div></div>
+          <div class="form-group">
+			<label>Email Address</label>
+      <input name='email' type= 'email' className="form-control" placeholder="email" onChange={this.getTheInfo.bind(this)} />
+      <div style={{ fontSize: 12, color: "red" }}>
+             {this.state.emailError}
           </div>
-<input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
-<div style={{ fontSize: 12, color: "red" }}>
-            {this.state.emailError}
-          </div>
-<input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
-<div style={{ fontSize: 12, color: "red" }}>
-            {this.state.passwordError}
-          </div>
+        </div>
 
-<input type="file" onChange={this.handleChange.bind(this)} />
+        <div class="form-group">
+			<label>Password</label>
+            <input type="password" class="form-control" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
+ <div style={{ fontSize: 12, color: "red" }}>
+             {this.state.passwordError}
+           </div>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Sign Up</button>
+		</div>
+        </form>
+</div>
 
-<Link className="dropdown-item"to="/login" ><button onClick={this.validate.bind(this)}>Signup</button></Link>
-  </div>
+
+        /* //       <div>
+// <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)}/>
+// <div style={{ fontSize: 12, color: "red" }}>
+//             {this.state.usernameError}
+//           </div>
+// <input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
+// <div style={{ fontSize: 12, color: "red" }}>
+//             {this.state.emailError}
+//           </div>
+// <input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
+// <div style={{ fontSize: 12, color: "red" }}>
+//             {this.state.passwordError}
+//           </div>
+
+// <input type="file" onChange={this.handleChange.bind(this)} />
+
+// <Link className="dropdown-item"to="/login" ><button onClick={this.validate.bind(this)}>Signup</button></Link>
+//   </div>
 
      /////////////////////////
-//      <div className="card">
-
-//          <h5 className="card-header info-color white-text text-center py-4">
-//              <strong>Sign up</strong>
-//          </h5>
-//          <div className="card-body px-lg-5 pt-0">
-//              <form className="text-center" style={color: '#757575'}} action="#!">
-
-//                  <div className="form-row">
-//                      <div className="col">
-//                          <div className="md-form">
-//                              <input type="text" id="materialRegisterFormFirstName" className="form-control" name='username' onChange={this.getTheInfo.bind(this)}/>
-//                              <label htmlFor="materialRegisterFormFirstName">Username</label>
-//                          </div>
-//                      </div>
-
-//                  <div className="md-form mt-0">
-//                      <input type="email" id="materialRegisterFormEmail" name='email' className="form-control" onChange={this.getTheInfo.bind(this)}/>
-//                      <label htmlFor="materialRegisterFormEmail">E-mail</label>
-//                  </div>
-
-//                  <div className="md-form">
-//                      <input type="password" id="materialRegisterFormPassword"  name='password' className="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock"  onChange={this.getTheInfo.bind(this)}/>
-//                      <label htmlFor="materialRegisterFormPassword">Password</label>
-//                      <small id="materialRegisterFormPasswordHelpBlock" className="form-text text-muted mb-4">
-//                          At least 8 characters and 1 digit
-//                      </small>
-//                  </div>
+//      <div>
+// <form className="demoForm">
+//        <h2>Sign up</h2>
+//        <div className="form-group">
+//          <label htmlFor="email">Username</label>
+//    <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)} type="text" className="form-control" required="required"/></div>
+//        <div className="form-group">
+//          <label htmlFor="email">Email address</label>
+//     <input name='username' placeholder="username"  id="txtUsername" className="form-control"   onChange={this.getTheInfo.bind(this)} required/>
+//    <div>
+//     {this.state.usernameError}
+//     </div> </div></form>
 
 
-//                  <button className="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" onClick={this.signUp.bind(this)}>Sign in</button>
-//  </div>
+ */
 
-// </form>
-// </div>
-
-
-
-//      </div>
 
      )}}
 export default Signup;
