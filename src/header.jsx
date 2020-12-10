@@ -23,11 +23,14 @@ function Header() {
           <Link className="dropdown-item" to="/profile">Profile</Link>
 
           <div className="dropdown-divider"></div>
-          <Link className="dropdown-item"to="/">Sign Out </Link>
+
         </div>
 
             </li>
                 </ul>
+                <Link className="dropdown-item"to="/"
+          ><button onClick ={()=>{
+            localStorage.removeItem("token") }}>Sign Out</button> </Link>
             </div>
                 </nav>
                 </div>
