@@ -41,7 +41,7 @@ function App()  {
          <Route path ='/wishlist' exact component ={Wishlist}></Route>
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
-         <Route path ='/profile'  component ={Filter}></Route>
+         <Route path ='/profile'  component ={AddCar}></Route>
 
 
 

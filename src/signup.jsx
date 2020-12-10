@@ -1,72 +1,130 @@
 import logo from './logo.svg';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import { storage } from './firebase/firebase'
+import { Link } from 'react-router-dom'
 
+
+const initialState={
+    username:"",
+      usernameError:"",
+      email:"",
+      emailError:"",
+      password:"",
+      passwordError:"",
+      image:null,
+      imageError:"",
+      url:"",
+      nameOftheimage:""
+    }
+const obj ={
+  emailError:"",
+  passwordError:"",
+  usernameError:""
+}
 class Signup extends React.Component {
+
   constructor() {
     super();
-    this.state = {
-      username:"",
-      email:"",
-      password:"",
-      image:null
-    }
+    this.state =initialState;
 
 }
-//  handleChange(e){
-//   if (e.target.files[0]) {
-// this.setState({
-//   image:e.target.files[0]
-// })
-//  }}
-//  handleUpload(){
-//   const uploadTask = storage.ref(`images/${this.state.image.name}`).put(this.state.image);
-//   uploadTask.on(
-//     "state_changed",
-//     snapshot => {
-//       // const progress = Math.round(
-//       //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-//       // );
-//       console.log('amal')
-//     },
-//     error => {
-//       console.log(error);
-//     },
-//     () => {
-//       storage
-//         .ref("images")
-//         .child(this.state.image.name)
-//         .getDownloadURL()
-//         .then(url => {
-//           this.setUrl(url);
-//         });
-//     }
-//   );
-// };
+ handleChange(e){
+  if (e.target.files[0]) {
+this.setState({
+  image:e.target.files[0],
+  nameOftheimage:e.target.files[0].name
+})
+ }}
 
-// }
+ validate () {
+  let usernameError = "";
+  let emailError = "";
+  let passwordError = "";
 
+  if (!this.state.username) {
+    usernameError = "Username required ";
+  }
+  if (!this.state.email) {
+    emailError = "Email required ";
+  }
+  if (!this.state.password) {
+    passwordError = "Password required ";
+  }
+  if (!this.state.email.includes("@") && this.state.email !== "") {
+    emailError = "invalid email";
+  }
+  if (this.state.password.length < 8  && this.state.password !== "" ) {
+    passwordError = "Password must be longer than 8 characters";
+  }
+
+  if (emailError || usernameError || passwordError) {
+    this.setState({ emailError:emailError, usernameError:usernameError , passwordError:passwordError});
+    return false;
+  }else{
+this.signUp()}
+
+};
+
+
+
+
+
+handleUpload () {
+  var that=this;
+
+  const uploadTask = storage.ref(`images/${this.state.nameOftheimage}`).put(this.state.image);
+  uploadTask.on(
+    "state_changed",
+    snapshot => {},
+
+    error => {
+      console.log(error);
+    },
+    () => {
+      storage
+        .ref("images")
+        .child(this.state.nameOftheimage)
+        .getDownloadURL()
+        .then(url => {
+          this.setState({url:url});
+        });
+    }
+  );
+};
+
+
+handleSubmit( event ) {
+if ( this.state.emailError ||this.state.usernameError ||  this.state.password){
+
+    this.setState(obj);
+  }
+};
 
 
 getTheInfo(event){
     this.setState({ [event.target.name]: event.target.value })
+    this.handleSubmit();
+
+
   }
 
 signUp(){
   var that = this
+  this.handleUpload();
+  console.log(this.state.username)
   $.ajax({
     method: 'POST',
-    url:'http://localhost:3000/signup',
+    url:'http://localhost:9000/signup',
     data : JSON.stringify({
-    username:that.state.username ,
-    email: that.state.email,
-    password:that.state.password
+    username:this.state.username ,
+    email: this.state.email,
+    password:this.state.password,
+    url:this.state.url
     }),
     contentType: "application/json",
     success:function(data){
-      console.log(data)
+      console.log('jkjd')
     },
     error: function(err){
       console.log('error:' ,err)
@@ -78,11 +136,21 @@ signUp(){
 
       <div>
 <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)}/>
+<div style={{ fontSize: 12, color: "red" }}>
+            {this.state.usernameError}
+          </div>
 <input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
+<div style={{ fontSize: 12, color: "red" }}>
+            {this.state.emailError}
+          </div>
 <input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
-<input type="file"  />
+<div style={{ fontSize: 12, color: "red" }}>
+            {this.state.passwordError}
+          </div>
 
-<button onClick={this.signUp.bind(this)}>Signup</button>
+<input type="file" onChange={this.handleChange.bind(this)} />
+
+<Link className="dropdown-item"to="/login" ><button onClick={this.validate.bind(this)}>Signup</button></Link>
   </div>
 
      /////////////////////////
