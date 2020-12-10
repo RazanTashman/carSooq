@@ -67,7 +67,7 @@ class Login extends React.Component {
 var that =this
     $.ajax({
       method: 'POST',
-      url:'http://localhost:9000/login',
+      url:'http://localhost:5000/login',
       data : JSON.stringify({
       email: this.state.email,
       password:this.state.password
@@ -75,10 +75,9 @@ var that =this
       contentType: "application/json",
       success:function(data){
         console.log(data)
-        localStorage.setItem ("token" ,{ token :data})},
+        localStorage.setItem ("token" ,data)},
       error: function(err){
         that.setState({emailError : err.responseText})
-        window.location.reload();
       }
     })
   }
