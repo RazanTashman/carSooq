@@ -45,7 +45,7 @@ function App()  {
          <Route path ='/filter'  component ={Filter}></Route>
          <Route path ='/car2'  component ={Car2}></Route>
          <Route path ='/form'  component ={Form}></Route>
-
+         <Route path ='/profile'  component ={AddCar}></Route>
 
 
 

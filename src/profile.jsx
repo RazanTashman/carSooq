@@ -1,5 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import AddCar from './addCar';
+
+
+
 import Header from './header';
 import Wishlist from './wishlist';
 import Car from './car';
@@ -54,7 +59,10 @@ class Profile extends React.Component {
 render() {
   return (
     <div>
-     <Header/>
+    <Header/>
+
+
+
 
      <div>
      <img src={this.state.user[0].image}/>
