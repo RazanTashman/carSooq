@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 // import App from './App';
 // import reportWebVitals from './reportWebVitals';
 
@@ -15,7 +16,10 @@ import Profile from './profile';
 import Wishlist from './wishlist';
 import Car from './car';
 import Filter from './filter'
+import About from './about'
 import AddCar from './addCar';
+import Car2 from './car2'
+import Form from './form'
 
 
 function App()  {
@@ -26,10 +30,7 @@ function App()  {
 // <h1>welcooooome</h1></div>
     <Router>
 
-       {/* <Route path='/' exact component={LoginForm}></Route> */}
 
-{/*
-      <Home/> */}
 
         <div >
 
@@ -41,7 +42,13 @@ function App()  {
          <Route path ='/wishlist' exact component ={Wishlist}></Route>
          <Route path ='/car'  component ={Car}></Route>
          <Route path ='/filter'  component ={Filter}></Route>
-         <Route path ='/profile'  component ={AddCar}></Route>
+         <Route path ='/filter'  component ={AddCar}></Route>
+         <Route path ='/aboutus'  component ={About}></Route>
+
+         <Route path ='/car2'  component ={Car2}></Route>
+         <Route path ='/form'  component ={Form}></Route>
+         {/* <Route path ='/profile'  component ={AddCar}></Route> */}
+
 
 
 

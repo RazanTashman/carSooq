@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import { storage } from './firebase/firebase'
-
+import Nav from './nav'
+// import {getTOKEN} from './hel'
 
 
 class AddCar extends React.Component {
@@ -16,15 +17,29 @@ class AddCar extends React.Component {
       price :0,
       opreation:"",
       image:null,
-      url:""
+      url:"",
+      nameOftheimage:""
+
 
  }
+this.changeStateDescreption=this.changeStateDescreption.bind(this);
+this.changeStatePrice=this.changeStatePrice.bind(this);
 this.changeState=this.changeState.bind(this);
-
 }
 
 changeState(event){
   this.setState({ [event.target.name]: event.target.value });
+  // this.setState({descreption : event.target.value})
+
+}
+
+changeStateDescreption(event){
+  // this.setState({ [event.target.name]: event.target.value });
+  this.setState({descreption : event.target.value})
+
+}
+changeStatePrice(event){
+  this.setState({price : event.target.value})
 
 }
 handleChange(e){
@@ -37,7 +52,7 @@ this.setState({
 
 handleUpload () {
   var that=this;
-  const uploadTask = storage.ref(`cars/${this.state.image.name}`).put(this.state.image);
+  const uploadTask = storage.ref(`cars/${this.state.nameOftheimage}`).put(this.state.image);
   uploadTask.on(
     "state_changed",
     snapshot => {},
@@ -48,7 +63,7 @@ handleUpload () {
     () => {
       storage
         .ref("cars")
-        .child(this.state.image.name)
+        .child(this.state.nameOftheimage )
         .getDownloadURL()
         .then(url => {
           this.setState({url:url});
@@ -60,12 +75,20 @@ handleUpload () {
 
 
 
-signUp(){
+addCar(){
   var that = this
-  console.log(this.state.brand)
+   var token =(localStorage.getItem('token'));
+//   const header = new Headers();
+// header.append('Authorization',token );
+//   console.log(this.state.brand)
+//   console.log("ifvkv")
+//   this.handleUpload()
+  console.log("tTTTTT:",token)
+// var token=localStorage.getItem("token")
+//   var headers = new HttpHeaders().set('Authorization', '' + this.token).set('Content-Type', 'application/json; charset=utf-8')
   $.ajax({
     method: 'POST',
-    url:'http://localhost:7000/addcar',
+    url:'http://localhost:7000/add',
     data : JSON.stringify({
     description:this.state.description ,
     brand: this.state.brand,
@@ -76,8 +99,11 @@ signUp(){
     url:this.state.url
     }),
     contentType: "application/json",
+
+      headers: {"Authorization": localStorage.getItem('token')}
+    ,
     success:function(){
-      console.log(this.state.year)
+      console.log('this.state.year')
     },
     error: function(err){
       console.log('error:' ,err)
@@ -87,6 +113,8 @@ signUp(){
 render(){
   return (
     <div>
+       <Nav />
+       <form action="/profile">
     <select name ="brand"
         onChange={this.changeState}  >
                     <option name="" disabled>Choose option</option>
@@ -128,10 +156,13 @@ render(){
                     <option value="sale">For sale</option>
                 </select>
 
-<input type='text' placeholder='type'></input>
+<input type='text' placeholder='descreption'  onChange={this.changeStateDescreption}></input>
+<input type='text' placeholder='price'  onChange={this.changeStatePrice}></input>
+
 <input type="file" onChange={this.handleChange.bind(this)} />
 
- <button  onClick ={this.signUp.bind(this) , this.handleUpload.bind(this)} type="submit">Post</button>
+ <button  onClick ={this.addCar.bind(this) } type="submit">Post</button>
+ </form>
 </div>
 
 //     //     <h5 className="card-header info-color white-text text-center py-4">
