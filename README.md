@@ -36,7 +36,8 @@ Installation:
 - Log in to enter your profile.
 - Go to inventory and use the filter engine to narrow your search and get the desired car that hit your standards
 - Check the about us page to know more and to contact us.
-- Try CarSooq now "the link"
+- Add a car 
+
 
 
 
