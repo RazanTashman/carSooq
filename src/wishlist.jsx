@@ -38,6 +38,13 @@ import img from './CarSooqLogo.png'
       });
      }
 
+      WLonMouseOver(id) {
+      document.getElementById(id).style.width = "20px";
+    }
+
+     WLonMouseOut(id) {
+      document.getElementById(id).style. width = "1.5rem";
+    }
 
    componentDidMount() {
     var that = this;
@@ -80,14 +87,15 @@ return  (
 <p className="card-text">{car.description}</p>
 </div>
 <ul className="list-group list-group-flush">
-<li className="list-group-item">{car.op}</li>
+{/* <li className="list-group-item">{car.op}</li> */}
 <li className="list-group-item">For {car.operation}</li>
 <li class="list-group-item">{car.color}</li>
 
 </ul>
 <div className="card-body">
 <a href="https://github.com/RazanTashman?tab=repositories" class="card-link">contact</a>
-<img className= {car.id }src={wishlist}  onClick={()=>this.handleDelete(car.id)} style={mystyle} alt="wishlist"/>
+{/* <img className= {car.id }src={wishlist}  onClick={()=>this.handleDelete(car.id)} style={mystyle} alt="wishlist"/> */}
+<img id= {car.id }src={wishlist}  onMouseOver={()=>this.WLonMouseOver(car.id)} onMouseOut={()=>this.WLonMouseOut(car.id)} onClick={()=>this.handleDelete(car.id)} style={mystyle} alt="wishlist"/>
 
 </div>
 </div>

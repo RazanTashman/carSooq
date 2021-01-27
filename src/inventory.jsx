@@ -10,12 +10,21 @@ import React from 'react'
 import ad1 from './fordadd3.jpg'
 import ad2 from './orange.jpg'
 import Wishlist from './heart.png'
+import Email from './email.png'
+import Form from './form'
  function Carlist(props) {
 var url = props.url || "/car"
    console.log("prooops",props.cars)
 function clicked(id){
   console.log("id CLICKED:",id)
  }
+
+ function sendEamil (id){
+   localStorage.setItem("carID",id)
+   window.location="/form"
+
+
+}
 
  function handleWishlist(carId) {
   // var that = this.state.car[0];
@@ -37,6 +46,15 @@ function clicked(id){
   }
  });
 }
+
+function WLonMouseOve(id) {
+  document.getElementById(id).style.width = "32px";
+}
+
+function WLonMouseOut(id) {
+  document.getElementById(id).style. width = "1.5rem";
+}
+
  const mystyle = {
   width: "1.5rem",
   marginLeft:"150px"
@@ -64,9 +82,13 @@ function clicked(id){
 
     </ul>
     <div className="card-body">
-      <a href="https://github.com/RazanTashman?tab=repositories" class="card-link">contact</a>
-      <img className= {car.id }src={Wishlist}  onClick={()=>handleWishlist(car.id)} style={mystyle} alt="wishlist"/>
-      {/* <a href="#" class="card-link">Another link</a> */}
+    <img id= {car.id }src={Email}  onMouseOver={()=>WLonMouseOve(car.id)} onMouseOut={()=>WLonMouseOut(car.id)}  onClick={()=>sendEamil(car.id)}  style={{width: "1.5rem",}}  alt="Email"/>
+
+    {/* <img id= {car.id }src={Email}  onMouseOver={()=>WLonMouseOve(car.id)} onMouseOut={()=>WLonMouseOut(car.id)}  onClick={<Form value={car.id}/>}  style={{width: "1.5rem",}}  alt="Email"/> */}
+
+      <img id= {car.id }src={Wishlist}  onMouseOver={()=>WLonMouseOve(car.id)} onMouseOut={()=>WLonMouseOut(car.id)} onClick={()=>handleWishlist(car.id)} style={mystyle} alt="wishlist"/>
+
+
     </div>
   </div>
 
@@ -245,9 +267,12 @@ isLogged(){
 <select style={{fontWeight:"bold",border: "solid  black 2px",borderRadius:"6px", size:'30px',cursor: 'pointer'}} onChange={this.onChangeBrandHandler.bind(this)}>
   <option style={{textAlign:"center"}}> Brand </option>
    <option value ="BMW">BMW</option>
+   <option  value ="Chevrolet">chevrolet</option>
+   <option  value="Dodge" >Dodge</option>
    <option  value ="Ford">Ford</option>
    <option  value ="Mercedes">Mercedes </option>
-   <option  value ="chevrolet">chevrolet</option>
+
+
  </select>
 
 </div>
@@ -271,10 +296,12 @@ isLogged(){
 
 <select  style={{fontWeight:"bold",border: "solid  black 2px",borderRadius:"6px", size:'30px',cursor: 'pointer'}} onChange={this.onChangeColorHandler.bind(this)}>
   <option style={{textAlign:"center"}}>Color </option>
-   <option value ="red">Red </option>
-   <option  value ="black">Black</option>
-   <option  value ="gray">Gray</option>
-   <option  value ="white">White</option>
+  <option value="Black" >Black</option>
+  <option value="Blue" >Blue</option>
+  <option value="Grey" >Grey</option>
+  <option value="Orange" >Orage</option>
+  <option value ="red">Red </option>
+  <option value="White" >White</option>
  </select>
 
 </div>

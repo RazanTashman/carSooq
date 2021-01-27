@@ -126,10 +126,17 @@ app.post("/inventory", (req, res) => {
       obj4.operation = operation;
       array.push(obj4);
   }
-  console.log("array:", array);
-  console.log("Object:", Object.keys(array[0])[0])
-  console.log("values:", Object.values(array[0])[0])
-  if (price === "lowestToHighest") {
+//   console.log("array:", array);
+//   console.log("Object:", Object.keys(array[0])[0])
+//   console.log("values:", Object.values(array[0])[0])
+//   console.log("price:", price)
+  if (price !== "highestToLowest" ) {
+    if (array.length === 0) {
+        let query = `SELECT * FROM cars ORDER BY price ASC`;
+        myDB.con.query(query, (err, results) => {
+        res.send(results);
+    });
+    }
       if (array.length === 1) {
           let query = `SELECT * FROM cars WHERE ${Object.keys(
               array[0]
@@ -162,24 +169,31 @@ app.post("/inventory", (req, res) => {
               console.log("results3", results);
               res.send(results);
           });
+          if (array.length === 4) {
+            let query = `SELECT * FROM cars WHERE ${Object.keys(
+                array[0]
+            )}= '${Object.values(array[0])}' AND ${Object.keys(
+                array[1]
+            )}= '${Object.values(array[1])}' AND ${Object.keys(
+                array[2]
+            )}= '${Object.values(array[2])}' AND ${Object.keys(
+                array[2]
+            )}= '${Object.values(array[3])}' ORDER BY price ASC`;
+            myDB.con.query(query, (err, results) => {
+                console.log("results3", results);
+                res.send(results);
+            });
+        }
       }
   }
-  if (array.length === 4) {
-      let query = `SELECT * FROM cars WHERE ${Object.keys(
-          array[0]
-      )}= '${Object.values(array[0])}' AND ${Object.keys(
-          array[1]
-      )}= '${Object.values(array[1])}' AND ${Object.keys(
-          array[2]
-      )}= '${Object.values(array[2])}' AND ${Object.keys(
-          array[2]
-      )}= '${Object.values(array[3])}' ORDER BY price ASC`;
-      myDB.con.query(query, (err, results) => {
-          console.log("results3", results);
-          res.send(results);
-      });
-  }
-  if (price === "highestToLowest") {
+
+  else {
+    if (array.length === 0) {
+        let query = `SELECT * FROM cars ORDER BY price DESC`;
+        myDB.con.query(query, (err, results) => {
+        res.send(results);
+    });
+    }
       if (array.length === 1) {
           let query = `SELECT * FROM cars WHERE ${Object.keys(
               array[0]
@@ -486,24 +500,31 @@ app.get("/feedback/:id", (req, res) => {
 
 
 app.post("/email", (req, res) => {
+    console.log("Emaiiiiiil");
   var email = {
-      carId: req.body.car,
       sender: req.body.sender,
+      carId: req.body.carID,
       msg: req.body.comment,
-      email: req.body.email
+    //   email: req.body.email
   };
+  console.log("email:",email);
   myDB.con.query(
       `SELECT owner FROM cars WHERE id= '${email.carId}'`,
       (err, results) => {
           console.log(results);
-          console.log("sender", email.sender);
-          console.log("receiver", email.receiver);
+          let query = `SELECT email FROM users WHERE userID = '${email.sender}' `;
+          myDB.con.query(query, (err, result1) => {
+            console.log("sender11", result1);
+
+
+        //   console.log("receiver", email.receiver);
           myDB.con.query(
-              `Insert into emails (sender, receiver) VALUES ('${email.sender}','${results[0].owner}')`,
+              `Insert into emails (sender, receiver) VALUES ('${result1[0].email}','${results[0].owner}')`,
               (err, results) => {
                   console.log("done", results);
               }
           );
+        });
       }
   );
   let getEmail = `SELECT email FROM users WHERE userId IN ( SELECT owner FROM cars WHERE id= '${email.carId}') `;
@@ -514,7 +535,7 @@ app.post("/email", (req, res) => {
           service: "gmail",
           auth: {
               user: "tashmanrazan@gmail.com",
-              pass: "z2013972043",
+              pass: "Z2013972043",
           },
       });
       var mailOptions = {
@@ -532,14 +553,9 @@ app.post("/email", (req, res) => {
           }
       });
   });
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+
 })
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const port = process.env.PORT || 7000;
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);

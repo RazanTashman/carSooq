@@ -150,9 +150,10 @@ render(){
                     <option name="" disabled>Choose option</option>
                     <option  value="Brand"  selected>Brand</option>
                     <option  value="BMW" >BMW</option>
-                    <option  value="Ford" >Ford</option>
                     <option  value="Chevorlet" >Chevrolet</option>
                     <option  value="Dodge" >Dodge</option>
+                    <option  value="Ford" >Ford</option>
+                    <option  value ="Mercedes">Mercedes </option>
                                 </select>
 <br/>
     <select name ="year" id="inputState" class="form-control"
@@ -172,10 +173,11 @@ render(){
                        <option value="" disabled>Choose option</option>
                        <option value="" selected>Color</option>
                        <option value="Black" >Black</option>
-                       <option value="Grey" >Grey</option>
-                       <option value="White" >White</option>
                        <option value="Blue" >Blue</option>
+                       <option value="Grey" >Grey</option>
                        <option value="Orange" >Orage</option>
+                       <option value ="red">Red </option>
+                       <option value="White" >White</option>
 </select>
 <br/>
     <select id="inputState" class="form-control" name ="operation"
@@ -195,7 +197,7 @@ render(){
 <label class="custom-file-label" for="customFile">Choose file</label>
 </div>
 <br/><br/>
-<button type="submit" onClick ={this.addCar.bind(this) }  style={{width: "550px"} } class="btn btn-primary"> {  this.state.loading && <Spinner
+<button type="submit" onClick ={this.addCar.bind(this) }  style={{width: "550px"} } class="btn btn-dark"> {  this.state.loading && <Spinner
                   as="span"
                   animation="grow"
                   size="sm"
