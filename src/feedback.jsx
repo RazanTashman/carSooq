@@ -21,7 +21,7 @@ class Feedback extends React.Component {
     console.log(this.props.id)
     $.ajax({
       method: "POST",
-      url: `http://localhost:3000/feedback/${this.props.id}`,
+      url: `/feedback/${this.props.id}`,
       data: JSON.stringify({
         feedback: this.state.feedback,
       }),
@@ -40,7 +40,7 @@ class Feedback extends React.Component {
     console.log(this.props.id)
     $.ajax({
       method: "GET",
-      url: `http://localhost:3000/feedback/${this.props.id}`,
+      url: `/feedback/${this.props.id}`,
       contentType: "application/json",
       success: function (data) {
         console.log("success");

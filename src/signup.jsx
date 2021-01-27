@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { storage } from './firebase/firebase'
 import { Link } from 'react-router-dom'
 
-
+import Nav from './nav'
 const initialState={
     username:"",
       usernameError:"",
@@ -110,7 +110,7 @@ signUp(){
   console.log(this.state.username)
   $.ajax({
     method: 'POST',
-    url:'http://localhost:9000/signup',
+    url:'http://localhost:7000/signup',
     data : JSON.stringify({
     username:this.state.username ,
     email: this.state.email,
@@ -128,7 +128,9 @@ signUp(){
 }
     render(){
       return (
+
 <div class="signup-form">
+<Nav/>
     <form action="/login">
 		<div class="form-header">
 			<h2>Sign Up</h2>

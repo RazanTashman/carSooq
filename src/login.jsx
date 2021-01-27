@@ -73,9 +73,12 @@ var that =this
       password:this.state.password
       }),
       contentType: "application/json",
+      headers: {"Authorization": localStorage.getItem('token')},
       success:function(data){
-        console.log(data)
-        localStorage.setItem ("token" ,data)},
+        console.log("data",data)
+        localStorage.setItem ("token" ,data.token)
+        localStorage.setItem ("id" ,data.id)
+      },
       error: function(err){
         that.setState({emailError : err.responseText})
       }
@@ -86,6 +89,8 @@ render(){
   return (
 
 <div class="signup-form">
+<Nav/>
+  <form action="/inventory">
 		<div class="form-header">
 			<h2>Log in</h2>
       </div>
@@ -106,7 +111,7 @@ render(){
         <div class="form-group">
 			<button type="submit" className="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Log in</button>
 		</div>
-
+    </form>
        </div>
 
   /* //   <div>

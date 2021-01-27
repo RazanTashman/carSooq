@@ -23,9 +23,11 @@ app.use(bodyParser.urlencoded({
 }));
 
 //for all cars
-app.get("/allcars", (req, res) => {
-    let query = `SELECT * FROM cars`;
+app.get("/allcars", async(req, res) => {
+    console.log("helllo from all carsSS")
+    let query = `SELECT * FROM cars ORDER BY id DESC`;
     myDB.con.query(query, (err, results) => {
+        // console.log("results.....",results)
         res.send(results);
     });
 });
@@ -40,6 +42,7 @@ app.post('/signup', async(req, res) => {
   let email = req.body.email
   let password = req.body.password
   let url = req.body.url
+
   let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
   myDB.con.query(emailExisted, async (err, results)=> {
   if (results.length > 0 && results[0].email === email) {
@@ -47,23 +50,29 @@ app.post('/signup', async(req, res) => {
   }
   const salt = await bcrypt.genSalt(1);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-  console.log(hashedPassword)
+  console.log('Im herrre')
+  console.log("hashedPassword",hashedPassword)
   const user = {
       username: req.body.username,
       email: req.body.email,
-      password: hashedPassword,
-      url: req.body.url
+      password: hashedPassword
+    //   url: req.body.url
   };
+  console.log('username',user.username,'email',user.email,'password',user.password,'url',user.url)
   myDB.con.query(`Insert into users (username, email, password ) VALUES ('${user.username}','${user.email}','${user.password}' )`)
   try{
       res.send(user)
+      console.log("res",user)
   }
   catch(err){
       res.status(400).send(err)
+      console.log("err",err)
   }}
 ) }
  )
- app.post('/login', async (req, res) => {
+ app.post('/login',  (req, res) => {
+    console.log("Hellloooo from Login")
+     var obj={}
   let email = req.body.email
   let password = req.body.password
   console.log(password)
@@ -71,14 +80,17 @@ app.post('/signup', async(req, res) => {
   myDB.con.query(emailExisted, async (err, results)=> {
       if (results.length > 0 && results[0].email === email) {
           const validPassword =await bcrypt.compare(password, results[0].password)
-          console.log(results[0].password)
-          console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
+          console.log("results",results[0])
+          obj.id= results[0].userID
+        //   console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
           if(!validPassword){
               return res.status(400).send("Password is invalid")}
           console.log(validPassword)
 // try{
               const token = jwt.sign({_id: results[0].userID}, "" +  process.env.SECRET_TOKEN)
-           res.send(token)
+              obj.token = token
+              console.log("obj.......",obj)
+           res.send(obj)
            console.log(token)
        } else{
   res.status(400).send("Password or Email is invalidddd")
@@ -95,7 +107,7 @@ app.post("/inventory", (req, res) => {
   var obj4 = {};
   let brand = req.body.brand;
   let year = req.body.year;
-  let colour = req.body.colour;
+  let color = req.body.color;
   let price = req.body.price;
   let operation = req.body.operation;
   if (brand !== "") {
@@ -106,20 +118,29 @@ app.post("/inventory", (req, res) => {
       obj2.year = year;
       array.push(obj2);
   }
-  if (colour !== "") {
-      obj3.colour = colour;
+  if (color !== "") {
+      obj3.color = color;
       array.push(obj3);
   }
   if (operation !== "") {
-      obj3.operation = operation;
-      array.push(obj3);
+      obj4.operation = operation;
+      array.push(obj4);
   }
-  console.log("array:", array);
-  if (price === "lowestToHighest") {
+//   console.log("array:", array);
+//   console.log("Object:", Object.keys(array[0])[0])
+//   console.log("values:", Object.values(array[0])[0])
+//   console.log("price:", price)
+  if (price !== "highestToLowest" ) {
+    if (array.length === 0) {
+        let query = `SELECT * FROM cars ORDER BY price ASC`;
+        myDB.con.query(query, (err, results) => {
+        res.send(results);
+    });
+    }
       if (array.length === 1) {
           let query = `SELECT * FROM cars WHERE ${Object.keys(
               array[0]
-          )}= '${Object.values(array[0])}' ORDER BY Price ASC`;
+          )[0]}= '${Object.values(array[0])[0]}' ORDER BY price ASC`;
           myDB.con.query(query, (err, results) => {
               console.log("results1", results);
               res.send(results);
@@ -130,7 +151,7 @@ app.post("/inventory", (req, res) => {
               array[0]
           )} = '${Object.values(array[0])}' AND ${Object.keys(
               array[1]
-          )} = '${Object.values(array[1])}') ORDER BY Price ASC`;
+          )} = '${Object.values(array[1])}') ORDER BY price ASC`;
           myDB.con.query(query, (err, results) => {
               console.log("results2", results);
               res.send(results);
@@ -143,33 +164,40 @@ app.post("/inventory", (req, res) => {
               array[1]
           )}= '${Object.values(array[1])}' AND ${Object.keys(
               array[2]
-          )}= '${Object.values(array[2])}'  ORDER BY Price ASC`;
+          )}= '${Object.values(array[2])}'  ORDER BY price ASC`;
           myDB.con.query(query, (err, results) => {
               console.log("results3", results);
               res.send(results);
           });
+          if (array.length === 4) {
+            let query = `SELECT * FROM cars WHERE ${Object.keys(
+                array[0]
+            )}= '${Object.values(array[0])}' AND ${Object.keys(
+                array[1]
+            )}= '${Object.values(array[1])}' AND ${Object.keys(
+                array[2]
+            )}= '${Object.values(array[2])}' AND ${Object.keys(
+                array[2]
+            )}= '${Object.values(array[3])}' ORDER BY price ASC`;
+            myDB.con.query(query, (err, results) => {
+                console.log("results3", results);
+                res.send(results);
+            });
+        }
       }
   }
-  if (array.length === 4) {
-      let query = `SELECT * FROM cars WHERE ${Object.keys(
-          array[0]
-      )}= '${Object.values(array[0])}' AND ${Object.keys(
-          array[1]
-      )}= '${Object.values(array[1])}' AND ${Object.keys(
-          array[2]
-      )}= '${Object.values(array[2])}' AND ${Object.keys(
-          array[2]
-      )}= '${Object.values(array[3])}' ORDER BY Price ASC`;
-      myDB.con.query(query, (err, results) => {
-          console.log("results3", results);
-          res.send(results);
-      });
-  }
-  if (price === "highestToLowest") {
+
+  else {
+    if (array.length === 0) {
+        let query = `SELECT * FROM cars ORDER BY price DESC`;
+        myDB.con.query(query, (err, results) => {
+        res.send(results);
+    });
+    }
       if (array.length === 1) {
           let query = `SELECT * FROM cars WHERE ${Object.keys(
               array[0]
-          )}= '${Object.values(array[0])}' ORDER BY Price DESC`;
+          )}= '${Object.values(array[0])}' ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results1", results);
               res.send(results);
@@ -180,7 +208,7 @@ app.post("/inventory", (req, res) => {
               array[0]
           )} = '${Object.values(array[0])}' AND ${Object.keys(
               array[1]
-          )} = '${Object.values(array[1])}') ORDER BY Price DESC`;
+          )} = '${Object.values(array[1])}') ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results2", results);
               res.send(results);
@@ -193,7 +221,7 @@ app.post("/inventory", (req, res) => {
               array[1]
           )}= '${Object.values(array[1])}' AND ${Object.keys(
               array[2]
-          )}= '${Object.values(array[2])}'  ORDER BY Price DESC`;
+          )}= '${Object.values(array[2])}'  ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results3", results);
               res.send(results);
@@ -208,7 +236,7 @@ app.post("/inventory", (req, res) => {
               array[2]
           )}= '${Object.values(array[2])}' AND ${Object.keys(
               array[2]
-          )}= '${Object.values(array[3])}' ORDER BY Price DESC`;
+          )}= '${Object.values(array[3])}' ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results3", results);
               res.send(results);
@@ -246,23 +274,27 @@ app.get("/car/:id", verify,(req, res) => {
   });
 });
 
+
 /////// to add car
-app.post("/add", verify, (req, res) => {
+app.post("/add", (req, res) => {
+    console.log("hello from adding cars ")
     var car = {
         brand: req.body.brand,
         year: req.body.year,
         color: req.body.color,
         price: req.body.price,
-        url: req.body.url,
+        image: req.body.image,
         operation: req.body.operation,
-        owner: req.user
+        descreption: req.body.descreption,
+        owner: req.body.id
     };
+    console.log("res",car)
     var query = `INSERT INTO cars
           (
-              brand, year, price, color, image ,operation,owner
+              brand, year, price, color,image,operation,description,owner
           )
           VALUES
-           (?,?,?,?,?,?,? )`;
+           (?,?,?,?,?,?,?,? )`;
     myDB.con.query(
         query,
         [
@@ -272,10 +304,19 @@ app.post("/add", verify, (req, res) => {
             car.color,
             car.image,
             car.operation,
-            car.owner,
+            car.descreption,
+            car.owner
         ],
         (err, results) => {
-            res.send(car);
+            try{
+                res.send(car);
+                // console.log("res",car)
+            }
+            catch(err){
+                res.status(400).send(err)
+                console.log("err",err)
+            }
+
         }
     );
 });
@@ -284,19 +325,24 @@ app.post("/add", verify, (req, res) => {
 
 
 /////// to display user profile
-app.post("/profile", (req, res) => {
+app.get("/profile/:id", (req, res) => {
+    console.log("hiii from profile")
     obj = {};
-    let userId = req.user;
-    let query = `SELECT * FROM users WHERE users.userId = '${userId}' `;
+    // let userId = req.user;
+    userId = req.params.id
+    console.log("req.params",req.params)
+    console.log("req.user",req.user)
+    let query = `SELECT * FROM users WHERE userId = '${userId}' `;
     myDB.con.query(query, (err, results) => {
         obj.username = results[0].username;
         obj.email = results[0].email;
         obj.image = results[0].image;
     });
-    let mySql = `SELECT * FROM cars WHERE cars.owner = '${userId}' `;
+    let mySql = `SELECT * FROM cars WHERE owner = '${userId}' ORDER BY id DESC`;
     myDB.con.query(mySql, (err, results) => {
-        console.log(results);
+        console.log("results",results);
         obj.cars = results;
+        console.log("Profile Result",obj)
         res.send(obj);
     });
 });
@@ -357,10 +403,12 @@ app.post("/wishlist", (req, res) => {
 
 
 //// to get for the wishlist
-app.get("/wishlist/:id", (req, res) => {
-    let wishlistId = parseInt(req.params.id);
-    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user IN (SELECT user FROM wishlist WHERE id = '${wishlistId}'))`;
-    myDB.con.query(mySql, (err, results) => {
+app.get("/wishlist/:id", async(req, res) => {
+    let userId = await  req.params.id
+    console.log(`userId ${userId}`)
+    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user = ${userId})`;
+       myDB.con.query(mySql, (err, results) => {
+        console.log("results",results)
         res.send(results);
     });
 });
@@ -407,13 +455,22 @@ app.get("/wishlist/:id", (req, res) => {
 
 
 // to delete cars
-app.delete("/delete/:id", (req, res) => {
-    let carId = parseInt(req.params.id);
+app.delete("/delete/", (req, res) => {
+    let carId = req.body.car;
+    let userId = req.body.user;
     console.log(carId);
-    let query = `DELETE FROM cars WHERE id = '${carId}'`;
+
+    let query = `DELETE FROM wishlist WHERE car = '${carId}'`;
     myDB.con.query(query, (err, results) => {
-        res.send("Deleted");
-    });
+        // res.send("Deleted");
+
+
+    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user = ${userId})`;
+    myDB.con.query(mySql, (err, results) => {
+     console.log("results",results)
+     res.send(results);
+ });
+});
 });
 
 
@@ -443,24 +500,31 @@ app.get("/feedback/:id", (req, res) => {
 
 
 app.post("/email", (req, res) => {
+    console.log("Emaiiiiiil");
   var email = {
-      carId: req.body.car,
       sender: req.body.sender,
+      carId: req.body.carID,
       msg: req.body.comment,
-      email: req.body.email
+    //   email: req.body.email
   };
+  console.log("email:",email);
   myDB.con.query(
       `SELECT owner FROM cars WHERE id= '${email.carId}'`,
       (err, results) => {
           console.log(results);
-          console.log("sender", email.sender);
-          console.log("receiver", email.receiver);
+          let query = `SELECT email FROM users WHERE userID = '${email.sender}' `;
+          myDB.con.query(query, (err, result1) => {
+            console.log("sender11", result1);
+
+
+        //   console.log("receiver", email.receiver);
           myDB.con.query(
-              `Insert into emails (sender, receiver) VALUES ('${email.sender}','${results[0].owner}')`,
+              `Insert into emails (sender, receiver) VALUES ('${result1[0].email}','${results[0].owner}')`,
               (err, results) => {
                   console.log("done", results);
               }
           );
+        });
       }
   );
   let getEmail = `SELECT email FROM users WHERE userId IN ( SELECT owner FROM cars WHERE id= '${email.carId}') `;
@@ -471,7 +535,7 @@ app.post("/email", (req, res) => {
           service: "gmail",
           auth: {
               user: "tashmanrazan@gmail.com",
-              pass: "z2013972043",
+              pass: "Z2013972043",
           },
       });
       var mailOptions = {
@@ -489,14 +553,9 @@ app.post("/email", (req, res) => {
           }
       });
   });
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+
 })
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const port = process.env.PORT || 7000;
 app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);

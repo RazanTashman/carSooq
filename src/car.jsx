@@ -54,7 +54,7 @@ class Car extends React.Component {
     var that = this.state.car[0];
    $.ajax({
     type: 'POST',
-    url:'http://localhost:3000/wishlist',
+    url:'/wishlist',
     contentType: "application/json",
     data : JSON.stringify({ id: that.id}),
     headers: { 'x-my-custom-header': 'some value' },

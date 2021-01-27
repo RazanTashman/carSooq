@@ -15,7 +15,10 @@ class Profile extends React.Component {
   constructor() {
     super();
     this.state = {
-    user: [{"image":"url", "username":"areen","email":"areen@gmail.com"}, [{ _id :1 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"},{ _id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"}]]
+    // user: [{"image":"url", "username":"areen","email":"areen@gmail.com"}, [{ _id :1 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"},{ _id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"}]],
+    username:"",
+    email:"",
+    list :[]
     }
   }
 
@@ -36,21 +39,32 @@ class Profile extends React.Component {
 
   componentDidMount() {
     var that = this;
+    console.log('IIIIDDDD',localStorage.getItem('id'))
    $.ajax({
     type: 'GET',
-    url:'http://localhost:7000/profile',
+    // url:'http://localhost:7000/profile',
+    url:`http://localhost:7000/profile/${localStorage.getItem('id')}`,
     contentType: "application/json",
     headers: { 'x-my-custom-header': 'some value' },
-    success: function(){
-      that.setState({
-        user: [{"image":"url", "username":"areen","email":"areen@gmail.com"}, [{ _id :1 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"},{ _id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"}]]
-      })
+    success: function(data){
+      // that.setState({
+      //   user: [{"image":"url", "username":"areen","email":"areen@gmail.com"}, [{ _id :1 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"},{ _id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"}]]
+      // })
       // console.log(data);
+
+
+      console.log("getSuccess:",data)
+      that.setState({
+        list : data.cars,
+        username: data.username,
+        email: data.email
+      })
     },
     error: function(err){
       console.log('error:' ,err)
     }
    });
+
   }
 
 
@@ -61,14 +75,42 @@ render() {
   return(
     <div>
     <Header/>
-     <div>
-       <br/>
-     <img src={image} width="90px" height="90px"/>
-     <h5>{this.state.user[0].username}</h5>
-      <h5>{this.state.user[0].email}</h5>
-     </div>
- <button style={{margin:"-50px 0px 0px 1400px"}} ><Link to="/wishlist">Wishlist</Link></button>
- <Carlist cars ={this.state.user[1]} url="/car2"  />
+
+
+
+ {/* <Carlist cars ={this.state.user[1]} url="/car2"  /> */}
+ {/* <Carlist cars={this.state.list}/> */}
+ {console.log("list:::::",this.state.list)}
+
+
+
+
+
+
+ <div className="row" style={{margin:"0 auto"}}>
+    {this.state.list.map((car,i) =>{
+   return  (
+    <div className="card" style={{width: "18rem"}}>
+    <img className="card-img-top" src={car.image}  alt="car"/>
+    <div className="card-body">
+      <h5 className="card-title">{car.brand}</h5>
+      <p className="card-text">{car.description}</p>
+    </div>
+    <ul className="list-group list-group-flush">
+    <li className="list-group-item">{car.op}</li>
+      <li className="list-group-item">For {car.operation}</li>
+      <li class="list-group-item">{car.color}</li>
+      {/* <li class="list-group-item">Vestibulum at eros</li> */}
+    </ul>
+
+  </div>
+  )
+   } )}
+</div>
+
+
+
+
 </div>
   )
 }
