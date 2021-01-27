@@ -75,15 +75,42 @@ render() {
   return(
     <div>
     <Header/>
-     <div>
-       <br/>
-     <img src={image} width="90px" height="90px"/>
-     <h5>{this.state.username}</h5>
-      <h5>{this.state.email}</h5>
-     </div>
- <button style={{margin:"-50px 0px 0px 1400px"}} ><Link to="/wishlist">Wishlist</Link></button>
+
+
+
  {/* <Carlist cars ={this.state.user[1]} url="/car2"  /> */}
- <Carlist cars={this.state.list}/>
+ {/* <Carlist cars={this.state.list}/> */}
+ {console.log("list:::::",this.state.list)}
+
+
+
+
+
+
+ <div className="row" style={{margin:"0 auto"}}>
+    {this.state.list.map((car,i) =>{
+   return  (
+    <div className="card" style={{width: "18rem"}}>
+    <img className="card-img-top" src={car.image}  alt="car"/>
+    <div className="card-body">
+      <h5 className="card-title">{car.brand}</h5>
+      <p className="card-text">{car.description}</p>
+    </div>
+    <ul className="list-group list-group-flush">
+    <li className="list-group-item">{car.op}</li>
+      <li className="list-group-item">For {car.operation}</li>
+      <li class="list-group-item">{car.color}</li>
+      {/* <li class="list-group-item">Vestibulum at eros</li> */}
+    </ul>
+
+  </div>
+  )
+   } )}
+</div>
+
+
+
+
 </div>
   )
 }

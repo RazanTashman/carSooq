@@ -13,17 +13,28 @@ function Nav () {
             <ul className="navbar-nav mr-auto">
 
                 <li className="navbar-item">
-                     <Link to="/inventory" className="nav-link" style={{marginLeft:"420px",fontWeight: 'bold', fontSize:"21px"}} >Inventory</Link>
+                     <Link to="/inventory" className="nav-link" style={{marginLeft:"90px",fontWeight: 'bold', fontSize:"15px"}} >Inventory</Link>
+                </li>
+
+                <li className="navbar-item">
+                     <Link to="/filter" className="nav-link" style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}} >Add Cars</Link>
+                </li>
+
+                <li className="navbar-item">
+                     <Link to="/profile" className="nav-link" style={{marginLeft:"15px",fontWeight: 'bold', fontSize:"15px"}} >profile</Link>
+                </li>
+
+                <li className="navbar-item">
+                     <Link to="/aboutus" className="nav-link" style={{marginLeft:"1px",fontWeight: 'bold', fontSize:"15px"}}>About Us</Link>
+                </li>
+
+                <li className="navbar-item">
+                    <Link to="/signup" className="nav-link" style={{marginLeft:"500px",fontWeight: 'bold', fontSize:"15px"}}>Sign up</Link>
                 </li>
                 <li className="navbar-item">
-                    <Link to="/signup" className="nav-link" style={{marginLeft:"400px",fontWeight: 'bold', fontSize:"15px"}}>SIGN UP</Link>
+                      <Link to="/login" className="nav-link" style={{marginLeft:"20px",fontWeight: 'bold', fontSize:"15px"}}>Login  </Link>
                 </li>
-                <li className="navbar-item">
-                      <Link to="/login" className="nav-link" style={{marginLeft:"20px",fontWeight: 'bold', fontSize:"15px"}}>LOG IN </Link>
-                </li>
-                <li className="navbar-item">
-                     <Link to="/aboutus" className="nav-link" style={{marginLeft:"30px",fontWeight: 'bold', fontSize:"15px"}}>ABOUT US</Link>
-                </li>
+
 
 
                 </ul>

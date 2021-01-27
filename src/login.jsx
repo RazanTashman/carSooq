@@ -73,8 +73,9 @@ var that =this
       password:this.state.password
       }),
       contentType: "application/json",
+      headers: {"Authorization": localStorage.getItem('token')},
       success:function(data){
-        console.log(data)
+        console.log("data",data)
         localStorage.setItem ("token" ,data.token)
         localStorage.setItem ("id" ,data.id)
       },
@@ -88,7 +89,8 @@ render(){
   return (
 
 <div class="signup-form">
-  <form action="/profile">
+<Nav/>
+  <form action="/inventory">
 		<div class="form-header">
 			<h2>Log in</h2>
       </div>

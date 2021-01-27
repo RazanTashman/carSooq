@@ -24,7 +24,7 @@ import React from 'react';
     var obj = {id:this.props.location.state, email: this.state.email, comment:this.state.message}
     $.ajax({
      type: 'POST',
-     url:'http://localhost:7000/email',
+     url:'/email',
      contentType: "application/json",
      data : JSON.stringify({  }),
      headers: { 'x-my-custom-header': 'some value' },

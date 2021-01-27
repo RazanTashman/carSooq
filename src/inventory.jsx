@@ -9,6 +9,7 @@ import React from 'react'
  import Car from './car'
 import ad1 from './fordadd3.jpg'
 import ad2 from './orange.jpg'
+import Wishlist from './heart.png'
  function Carlist(props) {
 var url = props.url || "/car"
    console.log("prooops",props.cars)
@@ -16,24 +17,74 @@ function clicked(id){
   console.log("id CLICKED:",id)
  }
 
+ function handleWishlist(carId) {
+  // var that = this.state.car[0];
+ $.ajax({
+  type: 'POST',
+  url:'http://localhost:7000/wishlist',
+  contentType: "application/json",
+  data : JSON.stringify(
+  {
+     user: localStorage.getItem('id'),
+     car: carId
+  }),
+  headers: { 'x-my-custom-header': 'some value' },
+  success: function(success) {
+   console.log("success");
+  },
+  error: function(err) {
+    console.log('error:' ,err)
+  }
+ });
+}
+ const mystyle = {
+  width: "1.5rem",
+  marginLeft:"150px"
+  // padding: "10px"
+};
+
   return (
+
     <div className="row" style={{margin:"0 auto"}}>
+
+      {/* <img  src={Wishlist}  alt="wishlist"/> */}
     {props.cars.map((car,i) =>{
    return  (
-
-    <div className="col-sm-6" key= {car._id}>
-
-  <div className="card"  style={{border: "solid  black 2px",cursor: 'pointer',  boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.6)' }} onClick={()=>{clicked(car.id)}} ><Link to={{pathname: url, state: car.id }}>
-  <img src={img}  alt="car" style={{width:"100%", height:"400px", margin:" 0 auto"}}/></Link>
+    <div className="card" style={{width: "18rem"}}>
+    <img className="card-img-top" src={car.image}  alt="car"/>
     <div className="card-body">
-      <h6  className="card-title">Brand: {car.brand}</h6>
-      <h6 className="card-text">Price: {car.price} $</h6>
-      <p className="card-text">Description: {car.description}</p>
+      <h5 className="card-title">{car.brand}</h5>
+      <p className="card-text">{car.description}</p>
+    </div>
+    <ul className="list-group list-group-flush">
+    <li className="list-group-item">{car.op}</li>
+      <li className="list-group-item">For {car.operation}</li>
+      <li class="list-group-item">{car.color}</li>
+      {/* <li class="list-group-item">Vestibulum at eros</li> */}
+
+    </ul>
+    <div className="card-body">
+      <a href="https://github.com/RazanTashman?tab=repositories" class="card-link">contact</a>
+      <img className= {car.id }src={Wishlist}  onClick={()=>handleWishlist(car.id)} style={mystyle} alt="wishlist"/>
+      {/* <a href="#" class="card-link">Another link</a> */}
+    </div>
+  </div>
+
+  //   <div className="col-sm-6" key= {car._id}>
+
+  // <div className="card"  style={{border: "solid  black 2px",cursor: 'pointer',  boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.6)' }} onClick={()=>{clicked(car.id)}} ><Link to={{pathname: url, state: car.id }}>
+  // <img src={car.image}  alt="car" style={{width:"100%", height:"400px", margin:" 0 auto"}}/></Link>
+  //   <div className="card-body">
+  //     <h6  className="card-title">Brand: {car.brand}</h6>
+  //     <h6 className="card-text">Price: {car.price} $</h6>
+  //     <p className="card-text">Description: {car.description}</p>
+  //     <button dis onClick={()=>this.handleWishlist()}>Add to wishlist</button>
 
 
-  </div>
-  </div>
-  </div>)
+  // </div>
+  // </div>
+  // </div>
+  )
    } )}
 </div>
 
@@ -55,7 +106,7 @@ class Inventory extends React.Component {
      var that = this;
       $.ajax({
         method: "GET",
-        url: "/allcars",
+        url: "http://localhost:7000/allcars",
         contentType: "application/json",
         // headers: { 'x-my-custom-header': 'some value' },
         success: (data) => {
@@ -72,13 +123,14 @@ ajax(){
   var that = this
 
   $.ajax({
-    url: "/inventory",
+    url: "http://localhost:7000/inventory",
     method: "POST",
     data: JSON.stringify({
       brand: that.state.brand,color: that.state.color,year: that.state.year,price: that.state.price, operation: that.state.operation
     }),
     contentType: "application/json",
     success: (data) => {
+      console.log("heeeeeeeeeeeeeeeeeerree::::::::",data)
       that.setState({
         cars:data});
     },
@@ -173,8 +225,8 @@ isLogged(){
      <div  className=" p-2 bg-light border-right" id="sidebar-wrapper" style ={{ width:"20rem"}}>
       <div className="sidebar-heading"></div>
       <div className="list-group list-group-flush">
-      <img src={ad2} alt="add"style={{height:"500px", width:"300px"}}/>
-      <img src={ad1} alt="add" style={{height:"500px", width:"300px"}}/>
+      {/* <img src={ad2} alt="add"style={{height:"500px", width:"300px"}}/>
+      <img src={ad1} alt="add" style={{height:"500px", width:"300px"}}/> */}
         {/* <li className="list-group-item list-group-item-action bg-light" id="bottom-list">addd</li> */}
         {/* <li className="list-group-item list-group-item-action bg-light" id="active-list">adv</li>
         <li className="list-group-item list-group-item-action bg-light" id="bag-list">ad pic</li> */}
@@ -254,8 +306,9 @@ isLogged(){
 <br/><br/>
 <div className="row">
   {/* <Carlist cars ={ [{ _id :1 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"},{ _id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj"}]} /> */}
-  <Carlist cars={this.state.cars}/>
 
+  <Carlist cars={this.state.cars}/>
+{console.log("cars:::::",this.state.cars)}
 </div></div>
 </div></div>
   )

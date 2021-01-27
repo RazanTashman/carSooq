@@ -4,7 +4,7 @@ import $ from 'jquery';
 import { storage } from './firebase/firebase'
 import { Link } from 'react-router-dom'
 
-
+import Nav from './nav'
 const initialState={
     username:"",
       usernameError:"",
@@ -128,7 +128,9 @@ signUp(){
 }
     render(){
       return (
+
 <div class="signup-form">
+<Nav/>
     <form action="/login">
 		<div class="form-header">
 			<h2>Sign Up</h2>

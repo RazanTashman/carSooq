@@ -25,9 +25,9 @@ app.use(bodyParser.urlencoded({
 //for all cars
 app.get("/allcars", async(req, res) => {
     console.log("helllo from all carsSS")
-    let query = `SELECT * FROM cars`;
+    let query = `SELECT * FROM cars ORDER BY id DESC`;
     myDB.con.query(query, (err, results) => {
-        console.log("results.....",results)
+        // console.log("results.....",results)
         res.send(results);
     });
 });
@@ -70,7 +70,8 @@ app.post('/signup', async(req, res) => {
   }}
 ) }
  )
- app.post('/login', async (req, res) => {
+ app.post('/login',  (req, res) => {
+    console.log("Hellloooo from Login")
      var obj={}
   let email = req.body.email
   let password = req.body.password
@@ -81,14 +82,14 @@ app.post('/signup', async(req, res) => {
           const validPassword =await bcrypt.compare(password, results[0].password)
           console.log("results",results[0])
           obj.id= results[0].userID
-          console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
+        //   console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
           if(!validPassword){
               return res.status(400).send("Password is invalid")}
           console.log(validPassword)
 // try{
               const token = jwt.sign({_id: results[0].userID}, "" +  process.env.SECRET_TOKEN)
               obj.token = token
-              console.log("obj",obj)
+              console.log("obj.......",obj)
            res.send(obj)
            console.log(token)
        } else{
@@ -106,7 +107,7 @@ app.post("/inventory", (req, res) => {
   var obj4 = {};
   let brand = req.body.brand;
   let year = req.body.year;
-  let colour = req.body.colour;
+  let color = req.body.color;
   let price = req.body.price;
   let operation = req.body.operation;
   if (brand !== "") {
@@ -117,20 +118,22 @@ app.post("/inventory", (req, res) => {
       obj2.year = year;
       array.push(obj2);
   }
-  if (colour !== "") {
-      obj3.colour = colour;
+  if (color !== "") {
+      obj3.color = color;
       array.push(obj3);
   }
   if (operation !== "") {
-      obj3.operation = operation;
-      array.push(obj3);
+      obj4.operation = operation;
+      array.push(obj4);
   }
   console.log("array:", array);
+  console.log("Object:", Object.keys(array[0])[0])
+  console.log("values:", Object.values(array[0])[0])
   if (price === "lowestToHighest") {
       if (array.length === 1) {
           let query = `SELECT * FROM cars WHERE ${Object.keys(
               array[0]
-          )}= '${Object.values(array[0])}' ORDER BY Price ASC`;
+          )[0]}= '${Object.values(array[0])[0]}' ORDER BY price ASC`;
           myDB.con.query(query, (err, results) => {
               console.log("results1", results);
               res.send(results);
@@ -141,7 +144,7 @@ app.post("/inventory", (req, res) => {
               array[0]
           )} = '${Object.values(array[0])}' AND ${Object.keys(
               array[1]
-          )} = '${Object.values(array[1])}') ORDER BY Price ASC`;
+          )} = '${Object.values(array[1])}') ORDER BY price ASC`;
           myDB.con.query(query, (err, results) => {
               console.log("results2", results);
               res.send(results);
@@ -154,7 +157,7 @@ app.post("/inventory", (req, res) => {
               array[1]
           )}= '${Object.values(array[1])}' AND ${Object.keys(
               array[2]
-          )}= '${Object.values(array[2])}'  ORDER BY Price ASC`;
+          )}= '${Object.values(array[2])}'  ORDER BY price ASC`;
           myDB.con.query(query, (err, results) => {
               console.log("results3", results);
               res.send(results);
@@ -170,7 +173,7 @@ app.post("/inventory", (req, res) => {
           array[2]
       )}= '${Object.values(array[2])}' AND ${Object.keys(
           array[2]
-      )}= '${Object.values(array[3])}' ORDER BY Price ASC`;
+      )}= '${Object.values(array[3])}' ORDER BY price ASC`;
       myDB.con.query(query, (err, results) => {
           console.log("results3", results);
           res.send(results);
@@ -180,7 +183,7 @@ app.post("/inventory", (req, res) => {
       if (array.length === 1) {
           let query = `SELECT * FROM cars WHERE ${Object.keys(
               array[0]
-          )}= '${Object.values(array[0])}' ORDER BY Price DESC`;
+          )}= '${Object.values(array[0])}' ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results1", results);
               res.send(results);
@@ -191,7 +194,7 @@ app.post("/inventory", (req, res) => {
               array[0]
           )} = '${Object.values(array[0])}' AND ${Object.keys(
               array[1]
-          )} = '${Object.values(array[1])}') ORDER BY Price DESC`;
+          )} = '${Object.values(array[1])}') ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results2", results);
               res.send(results);
@@ -204,7 +207,7 @@ app.post("/inventory", (req, res) => {
               array[1]
           )}= '${Object.values(array[1])}' AND ${Object.keys(
               array[2]
-          )}= '${Object.values(array[2])}'  ORDER BY Price DESC`;
+          )}= '${Object.values(array[2])}'  ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results3", results);
               res.send(results);
@@ -219,7 +222,7 @@ app.post("/inventory", (req, res) => {
               array[2]
           )}= '${Object.values(array[2])}' AND ${Object.keys(
               array[2]
-          )}= '${Object.values(array[3])}' ORDER BY Price DESC`;
+          )}= '${Object.values(array[3])}' ORDER BY price DESC`;
           myDB.con.query(query, (err, results) => {
               console.log("results3", results);
               res.send(results);
@@ -257,23 +260,27 @@ app.get("/car/:id", verify,(req, res) => {
   });
 });
 
+
 /////// to add car
-app.post("/add", verify, (req, res) => {
+app.post("/add", (req, res) => {
+    console.log("hello from adding cars ")
     var car = {
         brand: req.body.brand,
         year: req.body.year,
         color: req.body.color,
         price: req.body.price,
-        url: req.body.url,
+        image: req.body.image,
         operation: req.body.operation,
-        owner: req.user
+        descreption: req.body.descreption,
+        owner: req.body.id
     };
+    console.log("res",car)
     var query = `INSERT INTO cars
           (
-              brand, year, price, color, image ,operation,owner
+              brand, year, price, color,image,operation,description,owner
           )
           VALUES
-           (?,?,?,?,?,?,? )`;
+           (?,?,?,?,?,?,?,? )`;
     myDB.con.query(
         query,
         [
@@ -283,10 +290,19 @@ app.post("/add", verify, (req, res) => {
             car.color,
             car.image,
             car.operation,
-            car.owner,
+            car.descreption,
+            car.owner
         ],
         (err, results) => {
-            res.send(car);
+            try{
+                res.send(car);
+                // console.log("res",car)
+            }
+            catch(err){
+                res.status(400).send(err)
+                console.log("err",err)
+            }
+
         }
     );
 });
@@ -308,7 +324,7 @@ app.get("/profile/:id", (req, res) => {
         obj.email = results[0].email;
         obj.image = results[0].image;
     });
-    let mySql = `SELECT * FROM cars WHERE owner = '${userId}' `;
+    let mySql = `SELECT * FROM cars WHERE owner = '${userId}' ORDER BY id DESC`;
     myDB.con.query(mySql, (err, results) => {
         console.log("results",results);
         obj.cars = results;
@@ -373,10 +389,12 @@ app.post("/wishlist", (req, res) => {
 
 
 //// to get for the wishlist
-app.get("/wishlist/:id", (req, res) => {
-    let wishlistId = parseInt(req.params.id);
-    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user IN (SELECT user FROM wishlist WHERE id = '${wishlistId}'))`;
-    myDB.con.query(mySql, (err, results) => {
+app.get("/wishlist/:id", async(req, res) => {
+    let userId = await  req.params.id
+    console.log(`userId ${userId}`)
+    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user = ${userId})`;
+       myDB.con.query(mySql, (err, results) => {
+        console.log("results",results)
         res.send(results);
     });
 });
@@ -423,13 +441,22 @@ app.get("/wishlist/:id", (req, res) => {
 
 
 // to delete cars
-app.delete("/delete/:id", (req, res) => {
-    let carId = parseInt(req.params.id);
+app.delete("/delete/", (req, res) => {
+    let carId = req.body.car;
+    let userId = req.body.user;
     console.log(carId);
-    let query = `DELETE FROM cars WHERE id = '${carId}'`;
+
+    let query = `DELETE FROM wishlist WHERE car = '${carId}'`;
     myDB.con.query(query, (err, results) => {
-        res.send("Deleted");
-    });
+        // res.send("Deleted");
+
+
+    let mySql = `SELECT * FROM cars WHERE id IN (SELECT car FROM wishlist WHERE user = ${userId})`;
+    myDB.con.query(mySql, (err, results) => {
+     console.log("results",results)
+     res.send(results);
+ });
+});
 });
 
 

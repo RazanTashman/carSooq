@@ -11,15 +11,33 @@ function Header() {
         <Link to="/" className="navbar-brand" style={{marginLeft:"5px" ,fontWeight: 'bold', fontSize:"30px"}}>Carsooq</Link>
             <div className="collpase navbar-collapse">
             <ul className="navbar-nav mr-auto">
+
+            <li className="navbar-item">
+                     <Link to="/inventory" className="nav-link" style={{marginLeft:"90px",fontWeight: 'bold', fontSize:"15px"}} >Inventory</Link>
+                </li>
+
+
+
+
                 <li className="navbar-item">
-                     <Link to="/inventory" className="nav-link" style={{marginLeft:"440px", fontWeight: 'bold', fontSize:"21px"}} >Inventory</Link>
+                     <Link to="/filter" className="nav-link" style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}} >Add Cars</Link>
                 </li>
 
                 <li className="navbar-item">
-                     <Link to="/profile" className="nav-link"><i style={{fontSize:"35px", marginLeft:"550px"}} className="fas fa-user-circle"></i></Link>
+                     <Link to="/profile" className="nav-link" style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}} >profile</Link>
                 </li>
+
+
                 <li className="navbar-item">
-                     <Link to="/" className="nav-link"  onClick={()=>{localStorage.removeItem('token');localStorage.removeItem('id')}}>Sign Out</Link>
+                     <Link to="/aboutus" className="nav-link" style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}}>About Us</Link>
+                </li>
+
+                <li className="navbar-item">
+                     <Link to="/wishlist" className="nav-link" style={{marginLeft:"400px",fontWeight: 'bold', fontSize:"15px"}} >wishlist</Link>
+                </li>
+
+                <li className="navbar-item">
+                     <Link to="/" className="nav-link"  style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}} onClick={()=>{localStorage.removeItem('token');localStorage.removeItem('id')}}>Sign Out</Link>
                 </li>
                 </ul>
 

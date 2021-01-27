@@ -5,6 +5,7 @@ import Header from './header'
 import shell from './shell.jpg'
 import tot from './totall.jpg'
 import fr from './ferrari.jpg'
+import Nav from './nav'
 function About() {
   return (
     <div >
