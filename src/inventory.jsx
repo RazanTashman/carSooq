@@ -54,12 +54,20 @@ function WLonMouseOve(id) {
 function WLonMouseOut(id) {
   document.getElementById(id).style. width = "1.5rem";
 }
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
  const mystyle = {
   width: "1.5rem",
   marginLeft:"150px"
   // padding: "10px"
 };
+const dateStyle = {
+  color:"gray",
+  marginLeft:"205px"
+  // padding: "10px"
+};
+
 
   return (
 
@@ -68,14 +76,16 @@ function WLonMouseOut(id) {
       {/* <img  src={Wishlist}  alt="wishlist"/> */}
     {props.cars.map((car,i) =>{
    return  (
+
     <div className="card" style={{width: "18rem"}}>
+   <h6 style={dateStyle} >{date}</h6>
     <img className="card-img-top" src={car.image}  alt="car"/>
     <div className="card-body">
-      <h5 className="card-title">{car.brand}</h5>
+      <h5 className="card-title">{car.brand}</h5>  <h6 style={{color:"gray"}} >{car.year}</h6>
       <p className="card-text">{car.description}</p>
     </div>
     <ul className="list-group list-group-flush">
-    <li className="list-group-item">{car.op}</li>
+    <li className="list-group-item">{car.price} JOD </li>
       <li className="list-group-item">For {car.operation}</li>
       <li class="list-group-item">{car.color}</li>
       {/* <li class="list-group-item">Vestibulum at eros</li> */}
@@ -300,7 +310,7 @@ isLogged(){
   <option value="Blue" >Blue</option>
   <option value="Grey" >Grey</option>
   <option value="Orange" >Orage</option>
-  <option value ="red">Red </option>
+  <option value ="Red">Red </option>
   <option value="White" >White</option>
  </select>
 

@@ -70,27 +70,28 @@ app.post('/signup', async(req, res) => {
   }}
 ) }
  )
- app.post('/login',  (req, res) => {
+ app.post('/login',   (req, res) => {
     console.log("Hellloooo from Login")
      var obj={}
   let email = req.body.email
   let password = req.body.password
   console.log(password)
   let emailExisted = `SELECT * FROM users WHERE email = '${email}'`
-  myDB.con.query(emailExisted, async (err, results)=> {
+  myDB.con.query(emailExisted,  (err, results)=> {
       if (results.length > 0 && results[0].email === email) {
-          const validPassword =await bcrypt.compare(password, results[0].password)
-          console.log("results",results[0])
+          const validPassword = bcrypt.compare(password, results[0].password)
+        //   console.log("results",results[0])
           obj.id= results[0].userID
         //   console.log("$2b$04$48H6TdmHonNM0bMsoZ/go.W5urQvE16L4FQAN0u5Wsyd204zL5fzO")
           if(!validPassword){
               return res.status(400).send("Password is invalid")}
-          console.log(validPassword)
+        //   console.log(validPassword)
 // try{
               const token = jwt.sign({_id: results[0].userID}, "" +  process.env.SECRET_TOKEN)
               obj.token = token
-              console.log("obj.......",obj)
+            //   console.log("obj.......",obj)
            res.send(obj)
+        // res.json({token: obj.token, id: obj.id});
            console.log(token)
        } else{
   res.status(400).send("Password or Email is invalidddd")
@@ -504,7 +505,7 @@ app.post("/email", (req, res) => {
   var email = {
       sender: req.body.sender,
       carId: req.body.carID,
-      msg: req.body.comment,
+      msg: req.body.comment
     //   email: req.body.email
   };
   console.log("email:",email);
@@ -535,13 +536,13 @@ app.post("/email", (req, res) => {
           service: "gmail",
           auth: {
               user: "tashmanrazan@gmail.com",
-              pass: "Z2013972043",
+              pass: "Adam123456@",
           },
       });
       var mailOptions = {
           from: "tashmanrazan@gmail.com",
           to: results[0].email,
-          subject: "Car ",
+          subject: "From Car Sooq ",
           cc: email.email,
           text: email.msg,
       };

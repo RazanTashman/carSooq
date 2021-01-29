@@ -14,9 +14,9 @@ import React from 'react';
     console.log(this.props.state);
   }
   readEmail(event){
-  this.setState({ email: event.target.value });}
-  readmsg(event){
-    this.setState({ message: event.target.value });}
+  this.setState({ message: event.target.value });}
+  // readmsg(event){
+  //   this.setState({ message: event.target.value });}
   //carID senderEmail msg RecieverEmail
   handleForm() {
 
@@ -50,7 +50,7 @@ import React from 'react';
     return (
       <div>
     <Header/>
-
+    <h1 style={{fontFamily: 'Lobster',color:"#3d4035", textAlign:"center", backgroundColor:"orange"}}>Contact The Seller </h1>
     <form  action="/inventory" style={mystyle}  >
     <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter Your Message" name="email"  onChange={this.readEmail.bind(this)} required/>
 

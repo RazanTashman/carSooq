@@ -5,7 +5,7 @@ import logo from './logo.webp'
 function Header() {
   return (
     <div>
-    <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+    <nav className="navbar navbar-dark bg-dark navbar-expand-lg" >
 
     <Link to="/" className="navbar-brand" ><img src={logo}  style={{width:"90px" , height:"60px"}}/></Link>
         <Link to="/" className="navbar-brand" style={{marginLeft:"5px" ,fontWeight: 'bold', fontSize:"30px"}}>Carsooq</Link>
@@ -37,7 +37,7 @@ function Header() {
                 </li>
 
                 <li className="navbar-item">
-                     <Link to="/" className="nav-link"  style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}} onClick={()=>{localStorage.removeItem('token');localStorage.removeItem('id')}}>Sign Out</Link>
+                     <Link to="/" className="nav-link"  style={{marginLeft:"50px",fontWeight: 'bold', fontSize:"15px"}} onClick={()=>{localStorage.removeItem('token');localStorage.removeItem('id'); localStorage.removeItem('carID') }}>Sign Out</Link>
                 </li>
                 </ul>
 

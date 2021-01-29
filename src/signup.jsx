@@ -127,37 +127,44 @@ signUp(){
   })
 }
     render(){
+      const mystyle = {
+        width: "550px",
+        marginLeft:"450px",
+        marginTop:"180px"
+        // padding: "10px"
+      };
       return (
 
 <div class="signup-form">
 <Nav/>
-    <form action="/login">
+{/* <h1 style={{fontFamily: 'Lobster',color:"#3d4035", textAlign:"center", backgroundColor:"orange"}}>Sign Up </h1> */}
+    <form action="/login"  style={mystyle} >
 		<div class="form-header">
-			<h2>Sign Up</h2>
+
       </div>
         <div class="form-group">
-			<label>Username</label>
+
       <div>
-      <input name='username' placeholder="username" onChange={this.getTheInfo.bind(this)} type="text" className="form-control" required="required"/></div><div style={{ fontSize: 12, color: "red" }}>
+      <input name='username' placeholder="Username" onChange={this.getTheInfo.bind(this)} type="text" className="form-control" required="required"/></div><div style={{ fontSize: 12, color: "red" }}>
             {this.state.usernameError}
           </div></div>
           <div class="form-group">
-			<label>Email Address</label>
-      <input name='email' type= 'email' className="form-control" placeholder="email" onChange={this.getTheInfo.bind(this)} />
+
+      <input name='email' type= 'email' className="form-control" placeholder="Email" onChange={this.getTheInfo.bind(this)} />
       <div style={{ fontSize: 12, color: "red" }}>
              {this.state.emailError}
           </div>
         </div>
 
         <div class="form-group">
-			<label>Password</label>
-            <input type="password" class="form-control" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
+
+            <input type="password" class="form-control"  placeholder="Password" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
  <div style={{ fontSize: 12, color: "red" }}>
              {this.state.passwordError}
            </div>
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Sign Up</button>
+        <button type="submit" class="btn btn-dark btn-block btn-lg" onClick={this.validate.bind(this)}>Sign Up</button>
 		</div>
         </form>
 </div>

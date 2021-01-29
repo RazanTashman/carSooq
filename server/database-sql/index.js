@@ -61,7 +61,8 @@ var mysql = require('mysql');
 
 //edit your user and password
 //our database called stock
-var con = mysql.createConnection({
+var con = mysql.createPool({
+// var con = mysql.createConnection({
     host: "us-cdbr-east-02.cleardb.com",
     user: "bd186e318fc66b",
     password: "abc2e867",
@@ -70,10 +71,10 @@ var con = mysql.createConnection({
 
 `Insert into users (username, email, password) VALUES ('Adam','Adam@gmail.com','123456789')`
 // //connecting mysql and creating 2 tables in our stock; called cars & users
-con.connect()
-setInterval(function () {
-    con.query('SELECT 1');
-}, 5000);
+// con.connect()
+// setInterval(function () {
+//     con.query('SELECT 1');
+// }, 5000);
 // //fields of users table - users TABLE
 // var Users = "CREATE TABLE IF NOT EXISTS users ( id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username VARCHAR(20), email VARCHAR(30), password VARCHAR(255), image TEXT )";
 // con.query(Users, function(err, result) {

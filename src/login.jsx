@@ -73,10 +73,10 @@ var that =this
       password:this.state.password
       }),
       contentType: "application/json",
-      headers: {"Authorization": localStorage.getItem('token')},
+      // headers: {"Authorization": localStorage.getItem('token')},
       success:function(data){
         console.log("data",data)
-        localStorage.setItem ("token" ,data.token)
+       localStorage.setItem ("token" ,data.token)
         localStorage.setItem ("id" ,data.id)
       },
       error: function(err){
@@ -86,30 +86,37 @@ var that =this
   }
 
 render(){
+  const mystyle = {
+    width: "550px",
+    marginLeft:"450px",
+    marginTop:"180px"
+    // padding: "10px"
+  };
   return (
 
 <div class="signup-form">
 <Nav/>
-  <form action="/inventory">
+{/* <h1 style={{fontFamily: 'Lobster',color:"#3d4035", textAlign:"center", backgroundColor:"orange"}}>Log in </h1> */}
+
+  <form action="/inventory" style = {mystyle}>
 		<div class="form-header">
-			<h2>Log in</h2>
       </div>
         <div class="form-group">
-			<label>Email Address</label>
-        	<input type="email" class="form-control" name="email" required="required" onChange={this.getTheInfo.bind(this)}/>
+
+        	<input type="email" class="form-control" placeholder ="Email" name="email" required="required" onChange={this.getTheInfo.bind(this)}/>
     <div style={{ fontSize: 12, color: "red" }}>
             {this.state.emailError}
           </div>
         </div>
  <div class="form-group">
-<label>Password</label>
-            <input type="password" class="form-control" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
+
+            <input type="password" class="form-control" placeholder ="Password" name="password" required="required" onChange={this.getTheInfo.bind(this)}/>
     <div style={{ fontSize: 12, color: "red" }}>
             {this.state.passwordError}
           </div>
         </div>
         <div class="form-group">
-			<button type="submit" className="btn btn-primary btn-block btn-lg" onClick={this.validate.bind(this)}>Log in</button>
+			<button type="submit" className="btn btn-dark btn-block btn-lg" onClick={this.validate.bind(this)}>Log in</button>
 		</div>
     </form>
        </div>

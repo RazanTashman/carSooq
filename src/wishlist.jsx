@@ -5,7 +5,7 @@ import img from './CarSooqLogo.png'
  import{Carlist} from './inventory'
  import $ from 'jquery';
  import wishlist from './heart.png'
-
+ import Email from './email.png'
 
 
  class Wishlist extends React.Component {
@@ -45,6 +45,13 @@ import img from './CarSooqLogo.png'
      WLonMouseOut(id) {
       document.getElementById(id).style. width = "1.5rem";
     }
+
+    sendEamil (id){
+      localStorage.setItem("carID",id)
+      window.location="/form"
+
+
+   }
 
    componentDidMount() {
     var that = this;
@@ -87,13 +94,13 @@ return  (
 <p className="card-text">{car.description}</p>
 </div>
 <ul className="list-group list-group-flush">
-{/* <li className="list-group-item">{car.op}</li> */}
+<li className="list-group-item">{car.price} JOD</li>
 <li className="list-group-item">For {car.operation}</li>
 <li class="list-group-item">{car.color}</li>
 
 </ul>
 <div className="card-body">
-<a href="https://github.com/RazanTashman?tab=repositories" class="card-link">contact</a>
+<img id= {car.id }src={Email}  onMouseOver={()=>this.WLonMouseOver(car.id)} onMouseOut={()=>this.WLonMouseOut(car.id)}  onClick={()=>this.sendEamil(car.id)}  style={{width: "1.5rem",}}  alt="Email"/>
 {/* <img className= {car.id }src={wishlist}  onClick={()=>this.handleDelete(car.id)} style={mystyle} alt="wishlist"/> */}
 <img id= {car.id }src={wishlist}  onMouseOver={()=>this.WLonMouseOver(car.id)} onMouseOut={()=>this.WLonMouseOut(car.id)} onClick={()=>this.handleDelete(car.id)} style={mystyle} alt="wishlist"/>
 

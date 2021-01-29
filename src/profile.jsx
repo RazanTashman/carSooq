@@ -93,11 +93,11 @@ render() {
     <div className="card" style={{width: "18rem"}}>
     <img className="card-img-top" src={car.image}  alt="car"/>
     <div className="card-body">
-      <h5 className="card-title">{car.brand}</h5>
+      <h5 className="card-title">{car.brand}</h5> <h6 >{car.year}</h6>
       <p className="card-text">{car.description}</p>
     </div>
     <ul className="list-group list-group-flush">
-    <li className="list-group-item">{car.op}</li>
+    <li className="list-group-item">{car.price} JOD</li>
       <li className="list-group-item">For {car.operation}</li>
       <li class="list-group-item">{car.color}</li>
       {/* <li class="list-group-item">Vestibulum at eros</li> */}
