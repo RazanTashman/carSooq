@@ -9,7 +9,7 @@ const firebaseConfig = {
   appId: "1:1058355178054:web:391afaac0cfdf73a803847",
   measurementId: "G-D8TQWLG8CL"
 };
-
+///
 firebase.initializeApp( firebaseConfig );
 const storage = firebase.storage()
 export { storage , firebase as default}
