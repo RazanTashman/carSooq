@@ -49,7 +49,6 @@ import React from 'react';
     <form  action="/inventory" style={mystyle}  >
     <textarea  class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter Your Message" name="email"  onChange={this.readEmail.bind(this)} required/>
 
-        {/* <input type='text' class="form-control" id="formGroupExampleInput2" placeholder='descreption'  onChange={this.changeStateDescreption}></input> */}
 <br/><br/>
         <button type="submit" style={{width: "550px"} } class="btn btn-dark" onClick={()=>this.handleForm()}>Submit</button>
 </form>
