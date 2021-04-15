@@ -1,4 +1,3 @@
-// import { Link } from 'react-router-dom';
 import React from 'react';
  import Header from './header';
  import $ from 'jquery';
@@ -15,12 +14,8 @@ import React from 'react';
   }
   readEmail(event){
   this.setState({ message: event.target.value });}
-  // readmsg(event){
-  //   this.setState({ message: event.target.value });}
-  //carID senderEmail msg RecieverEmail
+ 
   handleForm() {
-
-    // var that = this.state.car[0];
     console.log(this.state);
     var obj = {sender:localStorage.getItem('id'), carID: localStorage.getItem("carID"),comment:this.state.message}
     $.ajax({
