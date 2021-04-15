@@ -33,25 +33,6 @@ class Car extends React.Component {
     }
 
 
-//send carID and token to know the user
-  // handleUpdate() {
-
-  //  $.ajax({
-  //   method: 'UPDATE',
-  //   url:'http://localhost:7000/wishlist',
-  //   contentType: "application/json",
-  //   data : JSON.stringify({ id: that.id}),
-  //   headers: { 'x-my-custom-header': 'some value' },
-  //   success: function(success) {
-  //    console.log(success);
-  //   },
-  //   error: function(err) {
-  //     console.log('error:' ,err)
-  //   }
-  //  });
-  // }
-
-
 render () {
   return (
       <div>
@@ -72,7 +53,7 @@ render () {
 
  </ul>
  <div className="card-body">
-   {/* <button onClick={this.handleUpdate.bind(this)}>update</button> */}
+ 
    <button onClick={()=>this.handleDelete(this.state.car[0].id)}>delete</button>
 
  </div>
