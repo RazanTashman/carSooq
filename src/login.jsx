@@ -5,8 +5,6 @@ import React from 'react';
 import $ from 'jquery';
 import Nav from './nav'
 import { Link } from 'react-router-dom'
-
-// import { Link } from 'react-router-dom';
   const initialState={
       email:"",
       emailError:"",
@@ -73,7 +71,6 @@ var that =this
       password:this.state.password
       }),
       contentType: "application/json",
-      // headers: {"Authorization": localStorage.getItem('token')},
       success:function(data){
         console.log("data",data)
        localStorage.setItem ("token" ,data.token)
@@ -90,13 +87,11 @@ render(){
     width: "550px",
     marginLeft:"450px",
     marginTop:"180px"
-    // padding: "10px"
   };
   return (
 
 <div class="signup-form">
 <Nav/>
-{/* <h1 style={{fontFamily: 'Lobster',color:"#3d4035", textAlign:"center", backgroundColor:"orange"}}>Log in </h1> */}
 
   <form action="/inventory" style = {mystyle}>
 		<div class="form-header">
@@ -121,34 +116,7 @@ render(){
     </form>
        </div>
 
-  /* //   <div>
-  //     <Nav />
 
-  //   <input name='email' type= 'email' placeholder="email" onChange={this.getTheInfo.bind(this)}/>
-  //   <div style={{ fontSize: 12, color: "red" }}>
-  //           {this.state.emailError}
-  //         </div>
-  //   <input name='password' placeholder="password" type='password' onChange={this.getTheInfo.bind(this)}/>
-  //   <div style={{ fontSize: 12, color: "red" }}>
-  //           {this.state.passwordError}
-  //         </div>
-  //   <button onClick={this.validate.bind(this)}>login</button>
-  // </div>
-
-
-=======
-
-
-
-
-
-//////////////////////////////////////////////////
->>>>>>> 245ead9772bb6c5f14443ae2fbfd28110a2b58c1
-
-
-
-//////////////////////////////////////////////////
- */
 
   )
 }
