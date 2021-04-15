@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
+
 
 import {BrowserRouter as Router,Route} from   "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Navbar from './components/navbar.component'
+
 import Home from './home';
 import Inventory from './inventory';
 import Signup from './signup';
@@ -25,15 +24,9 @@ import Form from './form'
 function App()  {
 
   return (
-//     <div>
-//     <Home></Home>
-// <h1>welcooooome</h1></div>
+
     <Router>
-
-
-
         <div >
-
          <Route path ='/' exact  component ={Home}></Route>
          <Route path ='/inventory' exact component ={Inventory}></Route>
          <Route path ='/signup' exact  component ={Signup}></Route>
@@ -44,18 +37,9 @@ function App()  {
          <Route path ='/filter'  component ={Filter}></Route>
          <Route path ='/filter'  component ={AddCar}></Route>
          <Route path ='/aboutus'  component ={About}></Route>
-
          <Route path ='/car2'  component ={Car2}></Route>
          <Route path ='/form'  component ={Form}></Route>
-         {/* <Route path ='/profile'  component ={AddCar}></Route> */}
-
-
-
-
-
         </div>
-
-
   </Router>
 
   );
