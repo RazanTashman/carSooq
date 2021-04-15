@@ -2,7 +2,6 @@ import React from "react";
 
 import $ from "jquery";
 import Nav from "./nav";
-// import { Link } from 'react-router-dom';
 class Feedback extends React.Component {
   constructor(props) {
     super(props);
@@ -51,9 +50,7 @@ class Feedback extends React.Component {
       },
     });
   }
-  // componentDidMount() {
-  //  this.getFeedback()
-  // }
+
   render() {
     return (
       <div>
