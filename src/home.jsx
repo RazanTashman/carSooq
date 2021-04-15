@@ -1,5 +1,3 @@
-// import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
 import React from 'react'
 import Nav from './nav'
 
@@ -23,28 +21,3 @@ function Home () {
 }
 
 export default Home ;
-
-// {/* <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-//         <Link to="/" className="navbar-brand">Carsooq</Link>
-//             <div className="collpase navbar-collapse">
-//             <ul className="navbar-nav mr-auto">
-
-//                 <li className="navbar-item">
-//                      <Link to="/inventory" className="nav-link">Inventory</Link>
-//                 </li>
-//                 <li className="navbar-item">
-//                     <Link to="/signup" className="nav-link">SIGN UP</Link>
-//                 </li>
-//                 <li className="navbar-item">
-//                       <Link to="/login" className="nav-link">LOG IN </Link>
-//                 </li>
-//                 <li className="navbar-item">
-//                      <Link to="/home#footer" className="nav-link">ABOUT US</Link>
-//                 </li>
-//                 {/* <li className="navbar-item">
-//                       <Link to="/createMark" className="nav-link">Add marks</Link>
-//                 </li> */}
-
-//                 </ul>
-//             </div>
-//         </nav> */}
