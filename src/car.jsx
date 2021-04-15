@@ -9,17 +9,11 @@
 class Car extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    car: [
-      { id :2 ,brand:"BMW", price: "15000", description:"rtcyvubhjnkxcyvuhbkjxcfgvhbjcfgvhj", "color":"pink","operation":"for rent", "image":"image here", "owner":"me","year":2020},
-       [{"sender":"areen","comment":"htghgh"},{"sender":"areeeeen","comment":"hii"}, {"sender":"areeeeen","comment":"hii"}]
-       ]
-    }
   }
 
 
   handleWishlist() {
-    var that = this.state.car[0];
+ 
    $.ajax({
     type: 'POST',
     url:'/wishlist',
