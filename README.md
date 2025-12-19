@@ -7,6 +7,9 @@ CarSooq Project
 Our website is considered about selling cars for X company to grab the buyers attention.
 It narrows the buyers wide searches in different websites or even live searchings.
 As a wider point of view for our future built out website it will have features that even sellers (individuals or companies) can advertise their cars which they want to sell so we will have even a wider web and a great connection between buyers and sellers.
+
+🔗 Demo: [Watch the demo on YouTube](https://www.youtube.com/watch?v=qgIegIgLKMg)
+
 # Motivation:
 This website is basically built for successful interaction between buyers and sellers.
 For buyers it dicreases the time, effort and money looking for the car that fits their needs, also in the future built out they will be able to order the car online with full description and inspection report.
